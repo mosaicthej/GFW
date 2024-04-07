@@ -321,7 +321,8 @@ Tools with minimal configuration and cost would be enabled to bypass the IP
   the circumvention tools.
 
 The mechanism of over-blocking can be abused by groups or individuals 
-  to vandalize the network, such as compromising competitor's network, 
+  to vandalize the network, such as compromising competitor's network via 
+  weaponizing censorship infrastructure, constitutes availibility attack;
   or to disrupt the network constantly that the cooperating parties would be
   annoyed, increase dissent and therefore defeat the purpose of the GFW.
   (Although the existence of GFW is self-defeating in the first place)
