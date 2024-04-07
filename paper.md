@@ -600,6 +600,34 @@ Researchers found that the GFW utilizes an *active probing* mechanism to
   and continuing development of Shadowsocks to improve its encryption and 
   obfuscation with community efforts. 
 
+### Novel Protocols
+
+Recent developments and adoption of novel protocols such as QUIC, HTTP/3 and IPv6
+  would also make the GFW's job harder, as the multiplexed and encrypted nature
+  in the transport and network layer make it harder to track traffic states, 
+  also increases the problem space exponentially for rule-based filtering.
+
+#### QUIC+HTTP/3
+
+**QUIC** (Quick UDP Internet Connections) is a transport layer protocol that 
+
+## VI. Keyword Filtering, Deep Packet Inspection Stateful Traffic Analysis and Evolution of GFW
+
+Where conventional blocking criteria are based on protocol's header information,
+  GFW evolves to use novel methods that inspect and analysis the payloads as well.
+
+With the funding of the state and political stressing from the government, 
+  the GFW has been able to keep up with the circumvention tools, and refined its
+  measurements to new emerging protocols. By a study in 2021 <x>@53_quicCensor</x>
+  to measure the blocking effectiveness on QUIC/HTTP3, 
+  researchers found that the GFW has higher failure rate on QUIC 
+  than the systems from Iran, India, Kazakhstan, it suggests that the GFW might
+  just blocked all QUIC traffic, suggesting that it does not yet has the 
+  capability to block selectively. Partially due to the QUIC's 
+
+Similarly, Iran blocked all UDP 
+
+
 refs:
 
 ```bib
