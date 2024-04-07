@@ -740,9 +740,26 @@ An adversary model is proposed:
 3. The VPS are likely to be marked on *Black/Gray List*, 
    and faced blocking by adminstrators at any future time.
 
+### Social Engineering 
+
+While in the attempt of demystifying the GFW, we might be underestimating or
+  overestimating the technical capabilities of GFW, it is entirely feasible 
+  that the deep-learning based traffic analysis is just a rumor, as the GFW
+  tends to rely on the state-controlled violence and social engineering to 
+  achieve the same goal.
+
+Around the same time where the developer and maintainer posted the possible
+  solutions to redirect the replay attacks to other http sites, 
+  and improving the cipher being used, and ready to deploy the new version
+  of the Shadowsocks, the state police found the maintainer and the repo was
+  *voluntarily* deleted by the maintainer, *clowwindy@GitHub*. <x>@58_breakwaIssue</x>
+
+Again, as many would argue, the GFW is not a technical problem, but a social
+  problem, and the social engineering is the most effective way to defeat the
+  GFW, as the GFW is not a monolithic entity, but a collection of individuals
+  with different goals and motivations.
 
 refs:
-
 ```bib
 @online{01_hist1986,
   title = "The Internet Timeline of China 1986-2003",
@@ -1288,3 +1305,78 @@ refs:
   doi = {10.1145/3154448.3154450}
 }
 
+@inproceedings{53_quicCensor,
+  author = {Elmenhorst, Kathrin and Sch\"{u}tz, Bertram and Aschenbruck, Nils and Basso, Simone},
+  title = {Web censorship measurements of HTTP/3 over QUIC},
+  year = {2021},
+  isbn = {9781450391290},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3487552.3487836},
+  doi = {10.1145/3487552.3487836},
+  abstract = {Web traffic censorship limits the free access to information, making it a global human rights issue. The introduction of HTTP/3 (HTTP over QUIC) yields promising expectations to counteract such interference, due to its novelty, build-in encryption, and faster connection establishment. To evaluate this hypothesis and analyze the current state of HTTP/3 blocking, we extended the open-source censorship measurement-tool OONI with an HTTP/3 module. Using an input list of possibly-blocked websites, real-world measurements with HTTPS and HTTP/3 were conducted in selected Autonomous Systems in China, Iran, India, and Kazakhstan. The presented evaluation assesses the different blocking methodologies employed for TCP/TLS versus the ones employed for QUIC. The results reveal dedicated UDP blocking in Iran and major IP blocklisting affecting QUIC in China and India.},
+  booktitle = {Proceedings of the 21st ACM Internet Measurement Conference},
+  pages = {276–282},
+  numpages = {7},
+  location = {Virtual Event},
+  series = {IMC '21}
+}
+
+@inproceedings{54_QUIC,
+  author = {Langley, Adam and Riddoch, Alistair and Wilk, Alyssa and Vicente, Antonio and Krasic, Charles and Zhang, Dan and Yang, Fan and Kouranov, Fedor and Swett, Ian and Iyengar, Janardhan and Bailey, Jeff and Dorfman, Jeremy and Roskind, Jim and Kulik, Joanna and Westin, Patrik and Tenneti, Raman and Shade, Robbie and Hamilton, Ryan and Vasiliev, Victor and Chang, Wan-Teh and Shi, Zhongyi},
+  title = {The QUIC Transport Protocol: Design and Internet-Scale Deployment},
+  year = {2017},
+  isbn = {9781450346535},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3098822.3098842},
+  doi = {10.1145/3098822.3098842},
+  abstract = {We present our experience with QUIC, an encrypted, multiplexed, and low-latency transport protocol designed from the ground up to improve transport performance for HTTPS traffic and to enable rapid deployment and continued evolution of transport mechanisms. QUIC has been globally deployed at Google on thousands of servers and is used to serve traffic to a range of clients including a widely-used web browser (Chrome) and a popular mobile video streaming app (YouTube). We estimate that 7\% of Internet traffic is now QUIC. We describe our motivations for developing a new transport, the principles that guided our design, the Internet-scale process that we used to perform iterative experiments on QUIC, performance improvements seen by our various services, and our experience deploying QUIC globally. We also share lessons about transport design and the Internet ecosystem that we learned from our deployment.},
+  booktitle = {Proceedings of the Conference of the ACM Special Interest Group on Data Communication},
+  pages = {183–196},
+  numpages = {14},
+  location = {Los Angeles, CA, USA},
+  series = {SIGCOMM '17}
+}
+
+@misc{55_HTTP3,
+    series =    {Request for Comments},
+    number =    9114,
+    howpublished =  {RFC 9114},
+    publisher = {RFC Editor},
+    doi =       {10.17487/RFC9114},
+    url =       {https://www.rfc-editor.org/info/rfc9114},
+    author =    {Mike Bishop},
+    title =     {{HTTP/3}},
+    pagetotal = 57,
+    year =      2022,
+    month =     jun,
+    abstract =  {The QUIC transport protocol has several features that are desirable in a transport for HTTP, such as stream multiplexing, per-stream flow control, and low-latency connection establishment. This document describes a mapping of HTTP semantics over QUIC. This document also identifies HTTP/2 features that are subsumed by QUIC and describes how HTTP/2 extensions can be ported to HTTP/3.},
+}
+
+@inproceedings{56_gfwTOR,
+  title = {How the Great Firewall of China is Blocking Tor},
+  booktitle = {2nd USENIX Workshop on Free and Open Communications on the Internet (FOCI 12)},
+  year = {2012},
+  address = {Bellevue, WA},
+  url = {https://www.usenix.org/conference/foci12/workshop-program/presentation/Winter},
+  publisher = {USENIX Association},
+  month = aug
+}
+
+@misc{57_blockingTor,
+      title={How China Is Blocking Tor}, 
+      author={Philipp Winter and Stefan Lindskog},
+      year={2012},
+      eprint={1204.0447},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR}
+}
+
+@online{58_breakwaIssue,
+        title= {Analysis and Detection of Issues in Shadowsocks}
+        author={BreakWa11@GitHub},
+        type={GitHub Issue},
+        url={https://web.archive.org/web/20160829052958/https://github.com/breakwa11/shadowsocks-rss/issues/38}
+}
+```
