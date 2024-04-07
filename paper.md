@@ -609,7 +609,36 @@ Recent developments and adoption of novel protocols such as QUIC, HTTP/3 and IPv
 
 #### QUIC+HTTP/3
 
-**QUIC** (Quick UDP Internet Connections) is a transport layer protocol that 
+**QUIC** (Quick UDP Internet Connections) is a transport layer protocol was designed
+  to provide secure, consistent, and low-latency connections over the internet.
+  A secure connection resembling DTLS (Datagram Transport Layer Security) is
+  running atop UDP and multiplexes multiple streams over the same connection.
+<x<>@54_QUIC</x>
+
+**HTTP/3** is the 3rd major version of HTTP used to exchange information on the
+  WWW. HTTP/3 is based on QUIC, and is designed to improve the performance of
+  the web, especially for mobile devices. <x>@55_HTTP3</x>
+
+The introduction of HTTP/3 (HTTP over QUIC) yields promising expectations 
+  to counteract such interference, due to its novelty, build-in encryption, 
+  and faster connection establishment. QUIC's methods of IP address discovery
+  should also make it harder to spoof. 
+
+Researchers in 2020 conducted a study on the effectiveness of the GFW to block
+  QUIC traffic, found that for AS-es which has high failure rate on TCP connections
+  (TCP-handshake timeout and connection reset), yields a significantly lower 
+  failure rate on QUIC connections. <x>@53_quicBlock</x>
+
+The same research also suggests that IP blocking is the primary causation of the
+  failing QUIC connections. Since the censor does not exclusively apply IP 
+  endpoint blocking, hosts that are targeted by a different form of HTTPS 
+  censorship are still available over QUIC.
+
+The adaptation of IPv6 would also make the GFW's job harder, as the IPv6 address
+  space is significantly larger than IPv4, and the GFW would have higher
+  operational overhead to keep adding more entries in the blacklist, and also
+  meant easier allocation for individual users to have their more VPSs 
+  in the IPv6 space.
 
 ## VI. Keyword Filtering, Deep Packet Inspection Stateful Traffic Analysis and Evolution of GFW
 
