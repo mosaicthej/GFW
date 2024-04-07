@@ -19,12 +19,12 @@ URL filtering, Keyword filtering, RST packets, Circumvention
 \subsection{I. Introduction}\label{i.-introduction}}
 
 \emph{Across the \textbf{Great Wall} can reach every corner in the
-world.} @01\_hist1986 This email message sent to Karlsruhe University of
-Germany, from Beijing in September 1987, marks China's entrance into the
-Internet. Ironically, as of December 2022, with 1.07 billion Internet
-users domestically, @02\_stat2022 it would be nearly impossible to reach
-to anywhere on Internet without break across the GFW, the Great Firewall
-of China.
+world.} \cite{01_hist1986} This email message sent to Karlsruhe
+University of Germany, from Beijing in September 1987, marks China's
+entrance into the Internet. Ironically, as of December 2022, with 1.07
+billion Internet users domestically, \cite{02_stat2022} it would be
+nearly impossible to reach to anywhere on Internet without break across
+the GFW, the Great Firewall of China.
 
 The GFW comprises of intricate and multifaceted mechanisms, which ranges
 over technical, societal and political aspects. Beyond being a technical
@@ -49,9 +49,9 @@ picture of the system.
 
 AS-es (autonomous systems) can be divided into internal and border AS-es
 where border AS-es communicate to foreign AS-es. Most of the filtering
-done by the GFW is done in the border AS-es @03\_whereFilter where the
-request and response packets enter and leave the country, some filtering
-done inside internal AS-es @03\_whereFilter as well.
+done by the GFW is done in the border AS-es \cite{03_whereFilter} where
+the request and response packets enter and leave the country, some
+filtering done inside internal AS-es \cite{03_whereFilter} as well.
 
 Majority of the filtering is done in border AS-es, as it is the main
 concern on the network layer. GFW's main work for domestic traffic is
@@ -59,8 +59,8 @@ usually done in the application layer, through social engineering and
 state surveillance on hosting platforms and the users, such as requiring
 content censors prior to publication on all platforms, real-name
 registration of the users, and potentially legal repercussions for those
-who post illicit content, etc. @04\_digitalEco\_mypaper. We would not
-cover these aspects in this paper.
+who post illicit content, etc. \cite{04_digitalEco_mypaper}. We would
+not cover these aspects in this paper.
 
 Having filtering done in internal AS-es is also likely an efficiency
 measure as having everything done in border AS-es could bottleneck the
@@ -72,7 +72,7 @@ as the paths to nodes in China might experience different levels of
 filtering, and the list of conditions for a packet to be censorable
 would change over time (e.g.~the term ``Tiananmen Square'' would rise in
 censorship around the anniversary of the 1989 protests in May and June)
-@05\_conceptDoppler.
+\cite{05_conceptDoppler}.
 
 It is the case that the purpose of the GFW isn't to create an impassable
 wall that prevents all foreign traffic, as it's technically infeasible
@@ -93,21 +93,21 @@ Monitored}\label{how-packets-are-monitored}}
 
 The packets in the internet traffic tracked by the GFW are monitored
 mainly with routers in various AS-es that equipped with IDS technology
-@03\_whereFilter, which enables the routers to inspect incoming traffic
-using mechanisms to be discussed in the next sections.
+\cite{03_whereFilter}, which enables the routers to inspect incoming
+traffic using mechanisms to be discussed in the next sections.
 
 Great amount of effort was put in the SDN, software defined networking,
 which separated the control plane and the data plane in the routers,
 this enables the routers to be more flexible and adaptive to the
 changing conditions of the network, and to be able to update the
-filtering rules in real-time. @15\_SDN
+filtering rules in real-time. \cite{15_SDN}
 
 When a packet satisfies the conditions for censorship, the most common
 case for the GFW is to send a TCP RST packet to both ends to terminate
-the TCP connection on both sides @03\_whereFilter, triggering a
+the TCP connection on both sides \cite{03_whereFilter}, triggering a
 denial-of-service attack prevent a pair of endpoints from communicating.
 Despite this, researchers have found it is possible to \emph{ignore} the
-spoofed RST packet and still receive the responses @06\_ignoring.
+spoofed RST packet and still receive the responses \cite{06_ignoring}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -168,7 +168,7 @@ sections.
 \subsection{III. IP Filtering}\label{iii.-ip-filtering}}
 
 IP filtering is the mechanism which has least operational cost and
-lowest level of granularity. @07\_taxonomy If not administrated
+lowest level of granularity. \cite{07_taxonomy} If not administrated
 properly, it would result in high false positive and false negative
 rates. Where:
 
@@ -235,7 +235,7 @@ block the IP address that is trying to connect to the host. The rule is
 in shape of \texttt{daemon:\ client:\ options} where the daemon is the
 process name or wildcard that the client is trying to connect to, the
 client is the address, host name, or wildcard to represent the client
-attempting to connect. @12\_hostman
+attempting to connect. \cite{12_hostman}
 
 The rule in figure 3-2 shows the block of IP 100.100.100.100. The rule
 states that all processes that the IP address tries to connect to should
@@ -259,7 +259,7 @@ Triggering}
 
 On the BGP level, the routers are configured to drop the packets from
 matched IP addresses, such black-holed IP addresses involves 3 steps:
-@13\_blackhole\_cisco @14\_blackhole\_rfc - \textbf{Setup
+\cite{13_blackhole_cisco} \cite{14_blackhole_rfc} - \textbf{Setup
 (preparation)}: A trigger is a special device that is installed at the
 NOC (Network Operations Center) exclusively for the purpose of
 triggering a black hole. The trigger must have an BGP peering
@@ -333,14 +333,15 @@ blames of entire university's network inaccessibility to Alice for
 to avoid similar behavior. The practice of \emph{collective punishiment}
 is not uncommon in China since very ancient times to extend the legal
 actions beyond the individual, and thus strengthen the social control.
-@17\_earlyChina
+\cite{17_earlyChina}
 
 The blacklist strategy is more common in the GFW, although whitelist
 strategy is possible and has been used in the past, such that after 2009
 Urumqi riots, internet access was blocked in Xinjiang in a way that only
 less than 100 local sites, such as banks and local government sites were
-accessible. @10\_missingLink It lasted for nearly a year, @11\_xinjiang
-damages to the economy, society and people's social life were immense.
+accessible. \cite{10_missingLink} It lasted for nearly a year,
+\cite{11_xinjiang} damages to the economy, society and people's social
+life were immense.
 
 \hypertarget{flaws-in-ip-blocking}{%
 \subsubsection{Flaws in IP Blocking}\label{flaws-in-ip-blocking}}
@@ -353,13 +354,13 @@ Since the IP blocking is limited only to a specific IP address, the
 earliest circumventing attempts are proxied access, this does not
 necessarily mean using a VPN. Some early circumvention strategies
 features using a proxy over HTTP which is generally supported by most
-browsers and applications. @18\_GFWSpaceTime
+browsers and applications. \cite{18_GFWSpaceTime}
 
 Also, even for a single site, it is likely to host on CDN and the IP
 address would be dynamic, the GFW would have to update the list
 frequently to keep the site blocked. (Or, block the entire CDN, which
 the collateral damage would be substantial. As of 2023, many CDN are
-affected by the GFW. @19\_detect)
+affected by the GFW. \cite{19_detect})
 
 Being the cheapest option on the list, it essentially is not scalable to
 block all the sites, to keep up with the dynamic nature of the internet,
@@ -383,7 +384,7 @@ place)
 
 Due to the majority of DNS request is over UDP, which tends to lack
 verification and encryption, DNS request are very vulnerable to
-hijacking and spoofing. @20\_dnsUDP
+hijacking and spoofing. \cite{20_dnsUDP}
 
 Part of the GFW is consisted of liar DNS servers and DNS hijackers
 returning incorrect IP addresses.
@@ -395,10 +396,10 @@ IP address of another website (e.g., leads to the site of local police
 department).
 
 Evidences suggests that the DNS filtering is keyword based
-@21\_dnsCompreh , this would implicitly solve the problem of mirror url
-for the same content, and the DNS manipulation would be able to block
-the entire domain, including all subdomains and the content hosted on
-the domain.
+\cite{21_dnsCompreh} , this would implicitly solve the problem of mirror
+url for the same content, and the DNS manipulation would be able to
+block the entire domain, including all subdomains and the content hosted
+on the domain.
 
 Because those domestic DNS servers are topologically and geographically
 closer to the users, the uses would be directed to the compromised
@@ -409,7 +410,7 @@ addresses before the upstream can respond to the query.
 Usually, DNS servers stores DNS records for recently accessed hosts in
 cache. If a record is in the cache, then the server would return the
 record directly as there is no need to query the record from the
-authoritative server again. @22\_dnsConcpets Unless the record is
+authoritative server again. \cite{22_dnsConcpets} Unless the record is
 expired, the server would query the upstream servers for the record of
 actual IP address. Most general DNS records are in the form of A and
 AAAA records, which stores IPv4 and IPv6 addresses respectively.
@@ -495,7 +496,7 @@ Strategies}\label{v.-survey-of-circumvention-tools-and-strategies}}
 
 Various circumvention tools have been developed to bypass the GFW,
 gradually increasing in complexity, with trade-offs among dimensions of:
-@07\_taxonomy
+\cite{07_taxonomy}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -530,7 +531,7 @@ to a specific censorship mechanism. e.g., secured alternative messaging
 application to ones raised security concerns (e.g., Signal, Telegram,
 etc), alternative DNS server for DNS manipulation, VPN or HTTP proxy for
 IP blocking, and encrypted tunnel for DPI and obfuscation for stateful
-traffic analysis. @48\_globalDefeat
+traffic analysis. \cite{48_globalDefeat}
 
 \begin{figure}
 \centering
@@ -550,7 +551,7 @@ includes word-of-mouth.
 channel}
 \end{figure}
 
-As figure 5-2 @49\_ICTAdopt addressed the people's adoption of most
+As figure 5-2 \cite{49_ICTAdopt} addressed the people's adoption of most
 ICTs, it is consisted on the spectrum from micro-individual to
 macro-social poles: with factors in aspects of \emph{system, technology,
 audience, social, use, adoption}
@@ -562,7 +563,7 @@ audience, social, use, adoption}
 circumvention tools}
 \end{figure}
 
-Similar pattern (figure 5-3) @47\_circumvention would apply to
+Similar pattern (figure 5-3) \cite{47_circumvention} would apply to
 circumvention tool use, with more weights on how each other factors
 would affect the usage, then usage would also have a reciprocal effect
 on the other factors.
@@ -572,8 +573,8 @@ scope of rest of this paper would focus on the technical aspects of the
 circumvention tools, and how they interact with the GFW.
 
 There are three commonly used circumvention methods that works together
-to bypass the GFW: @07\_taxonomy - HTTP/CGI proxy - VPN (IP tunneling) -
-Re-routing - Distributed Hosting
+to bypass the GFW: \cite{07_taxonomy} - HTTP/CGI proxy - VPN (IP
+tunneling) - Re-routing - Distributed Hosting
 
 \hypertarget{httpcgi-proxy}{%
 \subsubsection{HTTP/CGI Proxy}\label{httpcgi-proxy}}
@@ -623,8 +624,8 @@ is lately known that TOR's obfuscation leaves a fingerprint that is
 possible to be detected. (e.g., fixed packet size, fixed packet
 interval, etc) Even it is hard to decipher the content of the packets,
 the fact that it is a TOR packet is enough for such traffic to be
-blocked. @50\_tor\_finger The SDN topology of the GFW has separate nodes
-that is each specialized at high-efficency relaying and traffic
+blocked. \cite{50_tor_finger} The SDN topology of the GFW has separate
+nodes that is each specialized at high-efficency relaying and traffic
 analysis. Similar to the remotely triggered black hole model, the
 analysing node triggers the blocking node to block the TOR traffic.
 
@@ -643,12 +644,13 @@ issues. It is effective against ip blocking.
 
 However, depending on the CDN, there are cases that entire CDN is
 blocked by the GFW, such as github was not blocked but had connection
-issues in China, as its CDN, \emph{Fastly}, was blocked. @19\_detect
+issues in China, as its CDN, \emph{Fastly}, was blocked.
+\cite{19_detect}
 
 At another case, CDNs might chose to practice geo-block due to
 economical pressures. In 2018 researchers found that many CDNs had
 server-side blocking with China, Iran, Syria, Sudan, Cuba, Russia and
-North Korea. @51\_CDN403
+North Korea. \cite{51_CDN403}
 
 \hypertarget{tunneling}{%
 \subsubsection{Tunneling}\label{tunneling}}
@@ -680,10 +682,10 @@ paper)
 
 \textbf{Shadowsocks} (2012) is an open-sourced SOCKS protocols framework
 that is popular in China. It has many open-source forks in various
-languages @36\_SS-py @37\_SS-rust 38\_SS-go 39\_SS-cs.\\
+languages \cite{36_SS-py} \cite{37_SS-rust} 38\_SS-go 39\_SS-cs.\\
 According to a research survey in July 2015, of 371 faculty members and
 students from Tsinghua Univer-sity, 21\% used Shadowsocks to bypass
-censorship in China. @50\_googleScholar
+censorship in China. \cite{50_googleScholar}
 
 The popularity of Shadowsocks stems from its simplicity. Its lightweight
 design imposes minimal overhead on proxied traffic and makes it easy to
@@ -694,7 +696,7 @@ using Shadowsocks, and made it popular even among non-technical users.
 
 Researchers found that the GFW utilizes an \emph{active probing}
 mechanism to detect the Shadowsocks traffic, and then block the source
-IP addresses of the VPS-es. @40\_SSProbe Still, the blocks are only
+IP addresses of the VPS-es. \cite{40_SSProbe} Still, the blocks are only
 anecdotally reported, and continuing development of Shadowsocks to
 improve its encryption and obfuscation with community efforts.
 
@@ -720,7 +722,7 @@ multiple streams over the same connection.
 \textbf{HTTP/3} is the 3rd major version of HTTP used to exchange
 information on the WWW. HTTP/3 is based on QUIC, and is designed to
 improve the performance of the web, especially for mobile devices.
-@55\_HTTP3
+\cite{55_HTTP3}
 
 The introduction of HTTP/3 (HTTP over QUIC) yields promising
 expectations to counteract such interference, due to its novelty,
@@ -730,7 +732,8 @@ of IP address discovery should also make it harder to spoof.
 Researchers in 2020 conducted a study on the effectiveness of the GFW to
 block QUIC traffic, found that for AS-es which has high failure rate on
 TCP connections (TCP-handshake timeout and connection reset), yields a
-significantly lower failure rate on QUIC connections. @53\_quicBlock
+significantly lower failure rate on QUIC connections.
+\cite{53_quicBlock}
 
 The same research also suggests that IP blocking is the primary
 causation of the failing QUIC connections. Since the censor does not
@@ -756,7 +759,7 @@ When deemed that the cost of false negative for oversighting of
 information is more emergent issue than potential loss of false
 positives, but more are the cases that different parties of a
 authoritarian government fails to coordinate with each other. Such as
-Iran blocks all UDP traffic. @53\_quicBlock
+Iran blocks all UDP traffic. \cite{53_quicBlock}
 
 Various advanced methods are applied with the SDN topology of the GFW,
 which separates the concerns for high-efficiency relaying blocking
@@ -773,8 +776,8 @@ node relays the traffic
 For some encrypted and obfuscated traffic, such as TOR, even the payload
 are not easily readable, the traffic would still have side-channel
 vulnerabilities, such as the fixed packet size, fixed packet interval,
-and entropy of the packets. @50\_tor\_finger @56\_gfwTOR
-@57\_blockingTor
+and entropy of the packets. \cite{50_tor_finger} \cite{56_gfwTOR}
+\cite{57_blockingTor}
 
 In particular, Tor (in 2012), has a TLS client \texttt{hello} in the Tor
 cipher list, with the purpose of initiate a TLS connection.
@@ -795,10 +798,10 @@ fingerprint the traffic, and the GFW uses this feature to locate Tor
 traffic.
 
 Fingerprinting is also the mechanisms where the routers recognizes
-anomalies in the traffic pattern, @26\_gfwSS2020 once this is detected,
-probes will be send to server or the client for further attack gaining
-more data to confirm the anomaly, and then block the traffic. (usually
-done in a \textbf{replay attack})
+anomalies in the traffic pattern, \cite{26_gfwSS2020} once this is
+detected, probes will be send to server or the client for further attack
+gaining more data to confirm the anomaly, and then block the traffic.
+(usually done in a \textbf{replay attack})
 
 \hypertarget{active-probing-and-evolutions}{%
 \subsubsection{Active Probing and
@@ -813,10 +816,11 @@ the active probs from GFW. They studied the behaviors and fingerprinted
 certain traits of probes sent by GFW, including IP origin, AS origin,
 and TTL values.
 
-Compares to similar study done in 2015 @46\_gfw-discover, there are few
-more traits that indicates the wall became stronger during the 5 years,
-in terms of the active prober, which it is less likely to be recognized
-as a probe, and more likely to be recognized as a normal request.
+Compares to similar study done in 2015 \cite{46_gfw-discover}, there are
+few more traits that indicates the wall became stronger during the 5
+years, in terms of the active prober, which it is less likely to be
+recognized as a probe, and more likely to be recognized as a normal
+request.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3684}}
@@ -894,7 +898,7 @@ possible solutions to redirect the replay attacks to other http sites,
 and improving the cipher being used, and ready to deploy the new version
 of the Shadowsocks, the state police found the maintainer and the repo
 was \emph{voluntarily} deleted by the maintainer,
-\emph{clowwindy@GitHub}. @58\_breakwaIssue
+\emph{clowwindy@GitHub}. \cite{58_breakwaIssue}
 
 Again, as many would argue, the GFW is not a technical problem, but a
 social problem, and the social engineering is the most effective way to
