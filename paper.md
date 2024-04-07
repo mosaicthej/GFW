@@ -82,6 +82,12 @@ It is the case that the purpose of the GFW isn’t to create an impassable wall
  economically destructive to do so, but more to instill fear and self-censorship
  and implicitly mold the online behavior with the sense of compliance.
 
+Flaws and opportunities for exploitation exist for each level of filtering,
+  if exploiting these flaws would lead to eventual policy change due to the 
+  increasing cost of maintaining the GFW, or the increasing dissent from the
+  citizens, or the increasing pressure from the international community; The
+  circumvention tools would be the catalyst for the change. <x>07_taxonomy</x>
+
 ### How Packets Are Monitored
 
 The packets in the internet traffic tracked by the GFW are monitored mainly with
@@ -288,33 +294,125 @@ The blacklist strategy is more common in the GFW, although whitelist strategy is
 It lasted for nearly a year, <x>@11_xinjiang</x>
   damages to the economy, society and people's social life were immense.
 
-
-
-The rule shown in figure 1-2 shows how such a rule could be used to block the IP 100.100.100.100. In the rule it states that all processes that the IP address tries to connect to should be denied a connection making a TCP connection impossible to establish. Adding this rule to the “/etc/host.deny” file would IP block the address 100.100.100.100 from the network, and to block other IPs simply replace the IP with another.
-
 ### Flaws in IP Blocking
 
-The main disadvantages of IP blocking are that an entity’s IP address can be changed, there is delay in getting IP addresses banned, and that it is possible to *over-block*[3]. The first issue comes from the fact that it is possible for an entity to change their IP address for example by changing where their website is being hosted. This poses an issue for IP blocking because this mechanism relies only on IP to know who to block so by changing IP addresses a banned entity can essentially un-ban themselves thereby circumventing the mechanism. The next issue is related to the previous, but differs in the scale because while changing an IP can un-ban a single user new entities appearing and disappearing makes the list of IP addresses that should be blocked at any given time a moving target. Due to needing to either manually ban IP addresses or automatically ban them based on some metric such as illicit messages in a *time-frame* it creates a drift between what is actually banned and what should be banned leading to some illicit traffic getting past this mechanism. The final issue is not about failing to block traffic, but instead blocking too much traffic. *Over-blocking* comes from multiple entities sharing an IP address. An example where this would be a problem is if a NAT is in use for a network meaning that all users on that network are essentially sharing an IP address. If one user on that network managed to get IP blocked then that would mean that all users on that network would also be blocked as well due to sharing an IP address. This is not ideal as it means that non-illicit traffic that should get through cannot.
+In the case of IP blocking, the flaw would lies in their false-positive and 
+  false-negative rates, being effective and finale itself, certain oversites
+  would defeat its purpose.
+
+Since the IP blocking is limited only to a specific IP address, 
+  the earliest circumventing attempts are proxied access, this does not
+  necessarily mean using a VPN. Some early circumvention strategies features
+  using a proxy over HTTP which is generally supported by most browsers and
+  applications. <x>@18_GFWSpaceTime</x>
+
+Also, even for a single site, it is likely to host on CDN and the IP address
+  would be dynamic, the GFW would have to update the list frequently to keep
+  the site blocked. (Or, block the entire CDN, which the collateral damage 
+  would be substantial. As of 2023, many CDN are affected by the GFW. <x>@19_detect</x>)
+
+Being the cheapest option on the list, it essentially is not scalable to 
+  block all the sites, to keep up with the dynamic nature of the internet, 
+  maintenance of such list would mean a large amount of human resources and 
+  technical overhead. Let alone of the indirect economic impacts.
+
+Tools with minimal configuration and cost would be enabled to bypass the IP
+  blocking, and the GFW would have to rely on other mechanisms to keep up with
+  the circumvention tools.
+
+The mechanism of over-blocking can be abused by groups or individuals 
+  to vandalize the network, such as compromising competitor's network, 
+  or to disrupt the network constantly that the cooperating parties would be
+  annoyed, increase dissent and therefore defeat the purpose of the GFW.
+  (Although the existence of GFW is self-defeating in the first place)
 
 ## IV. DNS Manipulation
 
-DNS manipulation centers around DNS servers where domain names are translated into IP addresses. At these servers DNS manipulation can be done where instead of returning the actual IP addresses being searched for the result can be changed into either a non-functional IP address or into the IP address of another website. Either option prevents the user from connecting to the host they were attempting to connect to which is how this mechanism restricts internet traffic.
+Due to the majority of DNS request is over UDP, which tends to lack verification
+  and encryption, DNS request are very vulnerable to hijacking and spoofing. 
+  <x>@20_dnsUDP</x>
+
+Part of the GFW is consisted of liar DNS servers and DNS hijackers returning 
+  incorrect IP addresses. 
+
+At these server DNS, manipulation can be done where instead of returning the 
+  actual IP address for a result or relaying it to another DNS server, the 
+  servers would reply with either a non-functional IP address or with IP address
+  of another website (e.g., leads to the site of local police department).
+
+Evidences suggests that the DNS filtering is keyword based <x>@21_dnsCompreh</x>
+, this would implicitly
+  solve the problem of mirror url for the same content, and the DNS manipulation
+  would be able to block the entire domain, including all subdomains and the 
+  content hosted on the domain. 
+
+Because those domestic DNS servers are topologically
+  and geographically closer to the users, the uses would be directed to the 
+  compromised addresses before the upstream can respond to the query. 
 
 ### Implementing DNS Manipulation
 
-DNS manipulation in the GFW is done via DNS cache poisoning [1]. This means that the cache in DNS servers that usually stores DNS records for recently accessed hosts is manipulated such that the cached record no longer has the correct information. Normally DNS lookups work recursively where many DNS resolvers are examined to find out which one stores the relevant records or going to the name server for the host if none of the examined DNS resolvers have the record. For efficiency DNS resolvers cache recently accessed records. In order to implement DNS cache poisoning the record for the host name needs to be changed. The records themselves have many types, but focusing only on A and AAAA type records that store IPv4 and IPv6 addresses respectively is fine for an example.
+Usually, DNS servers stores DNS records for recently accessed hosts in cache.
+  If a record is in the cache, then the server would return the record directly
+  as there is no need to query the record from the authoritative server again.
+<x>@22_dnsConcpets</x> Unless the record is expired, the server would query the
+  upstream servers for the record of actual IP address.
+  Most general DNS records are in the form of A and AAAA records, which stores
+ IPv4 and IPv6 addresses respectively. 
 
 ![Figure 4-1: An example of A and AAAA type records](res/4.1-DNS.png)
 
-As seen in figure 1-1 one of these such records has fields for the type, domain name, value, and time to live stored within them. The value is the important field to change as it stores the IP address associated with the domain name. By changing this value to another address the DNS record becomes poisoned and will no longer return the correct value to the requester. An example of what this could look like is shown in figure 1-2 where the records for bannedSite.com and bannedSite2.com have been poisoned to refer to another site and to give a meaningless address respectively.
+DNS poisoning happens when the cache inside a server has been modified so that
+  it returns the wrong IP address without validating the record with the 
+  authoritative server. This is a common attack vector for redirecting users to
+  malicious sites, and the GFW uses this mechanism to block the access to 
+  certain sites.
 
 ![Figure 4-2: An example of DNS cache poisoning](res/4.2-DNS-poisoned.png)
 
-Time to live does cause some complications however as cached DNS records are regularly thrown out to ensure that information stays up to date. To remedy this some special list of records for hosts which are to be poisoned would be needed and would need to be somehow distributed to ensure that the DNS records remain poisoned. To actually poison the DNS records the Chinese government would just directly access the DNS records as unlike a common hacker they have the power to easily do that. From there they would only need to ensure that anyone on a Chinese network connects to a Chinese DNS server which given the power of the Chinese government would not be difficult.
+In example with the Figure 4-2, the DNS cache poisoning would be done by 
+  directly implanting fake DNS records into the cache of the DNS server.
+  With the state-owned ISPs, DNS relay is compromised and the DNS records are
+  all poisoned. Existing verification means such as using TTL on the DNS records
+  are not effective, compares to a 3rd party DNS spoofing attack, where an 
+  individual attacker usually have temporary access to few servers;
+  the affected DNS server, and all downstream and domestic servers 
+  are state-controlled. Conventional verification is futile. <x>23_dnsMeasure</x>
 
 ### Flaws of DNS Manipulation
 
-The first way to bypass this mechanism is by avoiding DNS lookups in the first place. This can be done as the purpose of a DNS server to find the IP address of a host, but if you already know the IP address somehow then this can be completely bypassed. Another method to bypass this is to change the host name being used as similar to IP blocking the DNS poisoning cannot be done to a host name that hasn’t been recognized as needing to be poisoned. This is not very practical however as not many hosts would want to change their domain name and the new domain name can also just be added to the list to be poisoned again. Another similar method is to have a domain name that resolves to the true IP of another poisoned IP. This is more practical as the website being accessed doesn’t need to change its own name instead a path around the poisoning is being added. This is also not entirely practical as the new domain can be added to the poisoned list and the new domain needs to know the IP of the actual destination website which it would likely need to use DNS to learn. The main flaw of this approach is similar to IP blocking where what should ideally be blocked is a moving target as new hosts can be created and host names can be changed meaning that there will always be websites that the system doesn’t recognize as needing to be poisoned. 
+Avoiding the compromised DNS servers in first place would be the most effective
+  way to bypass the DNS manipulation.
+
+For example, systems using systemd would be able to use `systemd-resolved` to
+  edit `/etc/systemd/resolved.conf` to add entries that override the default
+  DNS. This would allow the system to use a different DNS server that is trusted.
+  Note that due to the recursive lookup feature, the DNS server need to ensure
+  that all upstream are from clean sources too.
+
+Directly typing the IP addresses in browsers would also bypass DNS manipulation.
+
+Recent moves towards DNS over HTTPS (DoH) and DNS over TLS (DoT) would also 
+  make the DNS manipulation harder, as the DNS request and response would be
+  encrypted and the upstream DNS server would be able to verify the authenticity
+  of the DNS records.
+
+The problems still ensue as
+1. The ISP can just deny providing the service to the user who uses DoH/DoT.
+2. Opportunities of sidechannel attacks still exist to detect anomalies in the
+  encrypted traffic.
+
+Note that the *poison* in the tampered servers infers that, those compromises 
+  would have propagating effects due to the recursive nature of DNS lookups.
+  In 2012, internet groups has found out that with 39 AS-es in China injecting
+  forged DNS replies, open resolvers outside China distributed in 109 countries, 
+  suffer some collateral damage from those forged replies,
+  3 TLDs affected almost completely (99.53%, domains from within GFW, expected),
+  and 11573 resolvers affected (26.4%) or 1 out of 16 unexpected TLDs. 
+  (`de xn--3e0b707e kr kp co travel pl no iq hk fi uk jp nz ca`)
+  As some paths between resolvers and some TLD (Top Level Domain) name servers 
+  transit through (affected) ISPs in China. <x>24_dnsGlobal</x>
+
 
 refs:
     
