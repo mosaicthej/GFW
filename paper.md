@@ -76,8 +76,64 @@ It is the case that the purpose of the GFW isn’t to create an impassable wall
 
 ### How Packets Are Monitored
 
-The way the packet monitoring is done essentially boils down to certain routers in the various AS-es being equipped with IDS technology to inspect incoming traffic using the various mechanisms to be discussed in the next sections [1]. When a packet containing illicit data is detected the way it is dealt with is by sending a TCP RST packet to both ends to terminate the TCP connection on both sides. An interesting quirk of their method is that the illicit message itself is still passed along the network meaning that if you ignore the spoofed RST packet you can actually still receive the illicit message on the other end [3]. The GFW will also not respond to packets unless a complete TCP handshake has been conducted [2] meaning that the firewall is stateful. Being stateful is helpful for the firewall as keeping track of the connections allows the wall to analyze traffic patterns over time which allows it to differentiate between types of traffic [4]. An example of this could be that if a large amount of data is streaming through one connection then that connection is most likely transmitting video.
+The packets in the internet traffic tracked by the GFW are monitored mainly with
+  routers in various AS-es that equipped with IDS technology <x>@ref03</x>, which
+  enables the routers to inspect incoming traffic using mechanisms to be discussed
+  in the next sections.
 
+When a packet satisfies the conditions for censorship, the most common case for the
+  GFW is to send a TCP RST packet to both ends to terminate the TCP connection on
+  both sides <x>@ref03</x>, triggering a denial-of-service attack prevent a pair
+  of endpoints from communicating. Despite this, researchers have found it is 
+  possible to *ignore* the spoofed RST packet and still receive the responses
+  <x>@ref06</x>.
+
+```bash
+iptables -A INPUT -p tcp --tcp-flags RST RST -j DROP
+# or using BSD's ipfw
+ipfw add 1000 drop tcp from any to me tcpflags rst in
+```
+[2.1 commands that ignores all RST packets]()
+
+```log
+cam(55817) → china(http) [SYN]
+china(http) → cam(55817) [SYN, ACK] TTL=41
+cam(55817) → china(http) [ACK]
+cam(55817) → china(http) GET /?falun HTTP/1.0<cr><lf><cr><lf>
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) HTTP/1.1 200 OK (text/html)<cr><lf> etc
+china(http) → cam(55817) . . . more of the web page
+cam(55817) → china(http) [ACK] seq=25, ack=2921
+china(http) → cam(55817) . . . more of the web page
+china(http) → cam(55817) [RST] TTL=49, seq=1461
+china(http) → cam(55817) [RST] TTL=49, seq=2921
+china(http) → cam(55817) [RST] TTL=49, seq=4381
+cam(55817) → china(http) [ACK] seq=25, ack=4381
+china(http) → cam(55817) [RST] TTL=49, seq=2921
+china(http) → cam(55817) . . . more of the web page
+china(http) → cam(55817) . . . more of the web page
+cam(55817) → china(http) [ACK] seq=25, ack=7301
+china(http) → cam(55817) [RST] TTL=49, seq=5841
+...
+```
+[2.2 Example of ignoring RST packets]()
+
+Note that the wall would also have the capability to track
+  the ip addresses and the content of the packets, 
+  and potentially the users who initiates the communications.
+
+Also note that this experiment was done in 2006, and the GFW had its behavior
+ since then, based on our experiment in 2024, the GFW would still send
+ RST packets, but the most times, the rest of the content would be dropped.
+
+Recent standards like HTTP/2 and QUIC would also make the GFW's job harder as 
+  the encrypted and multiplexed nature of these transport layer protocols, 
+  the wall would use alternative strategies to track the packets, including 
+  deep packet inspection and stateful traffic analysis. The increased complexity
+  increases chances of false negatives, yielding slightly lower blocking rates.
+  We would discuss these findings in next sections.
 
 ## III. IP Blocking
 
@@ -156,7 +212,11 @@ refs:
         URL: https://doi.org/10.1145/1315245.1315290
         accessed: 2024-04-03
 
-        
-        
+    - id: ref06
+        title: Ignoring the Great Firewall of China
+        author: Clayton, R., Murdoch, S.J., Watson, R.N.M
+        pubinfo: Danezis, G., Golle, P. (eds) Privacy Enhancing Technologies. PET 2006. Lecture Notes in Computer Science, vol 4258. Springer, Berlin, Heidelberg. 
+        URL: https://doi.org/10.1007/11957454_2
+        accessed: 2024-04-01        
     
 ---
