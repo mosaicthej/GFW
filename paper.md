@@ -203,6 +203,12 @@ In this sample entry of `/etc/hosts.deny` file, the rule is to block the IP addr
   the client is the address, host name, 
   or wildcard to represent the client attempting to connect. <x>@12_hostman</x>
 
+The rule in figure 3-2 shows the block of IP 100.100.100.100. The rule states 
+  that all processes that the IP address tries to connect to should be denied,
+  making TCP connection impossible to establish. Adding this rule to the 
+  `/etc/host.deny` file would IP block the address 100.100.100.100 within the 
+  network
+
 ![Figure 3-3: Destination-based Black Hole Filtering with Remote Triggering](res/3-3-cisco.png)
 
 ![Figure 3-4: Source-based Black Hole Filtering with Remote Triggering](res/3-4-cisco-source.png)
@@ -221,9 +227,60 @@ On the BGP level, the routers are configured to drop the packets from matched
   Loose URPF (Unicast Reverse Path Forwarding) is configured on all external facing 
   interfaces of PEs.
 
-- **Triggering**: When an administrator adds a static route to the trigger, which 
-  redistributes the route by sending a BGP update to all its BGP peers, setting 
-  the next hop to the target destination address 
+- **Triggering**: When an administrator adds a static route to the trigger, 
+  which redistributes the route by sending a BGP update to all its BGP peers, 
+  setting the next hop to the target destination address (192.0.2.1 in this case)
+
+  Each PE receives an BGP update and sets its next hop to the source IP to the
+  unused IP address space 192.0.2.1. The next hop to this address is set to Null0
+  using a static routing entry in the router configuration. The next hop entry
+  in the FIB (Forwarding Information Base) is updated to point to Null0.
+
+  All traffic from the source IP will fail the loose URPF check at the PEs and 
+  as a consequence will be dropped.
+
+- **Withdrawal**: Once the trigger is in place, all traffic from the source IP
+  address will be dropped at the PEs. If it removed from the black list, the
+  administrator would manually remove the static route from 
+  the triggering device, which sends a BGP route withdrawal to its BGP peers.
+  This prompts the edge routers to remove the existing route for the source IP
+  that points to 192.0.2.1 and to install a new route in the FIB based on the
+   IGP (Interior Gateway Protocol) RIB (Routing Information Base) entry.
+  If this new route is successful, loose URPF will pass and traffic will be
+  forwarded normally.
+
+This implementation comes with 2 flavors of black hole filtering: 
+  Destination-Based and Source-Based. Above describes a source-based approach
+  but the destination-based approach is similar, excepting the criteria for 
+  black hole a packet is the destination IP address.
+
+In a scenario of, when Alice, a university student, attempting to querying 
+  some blacklisted terms through a search engine somewhere outside the country.
+  The GFW intercepts the query and may deemed that the search engine
+  or the user should be punished. <x>16_censorPerspectives</x>
+
+When encountering the source-based black hole, all packets returned from the 
+  search engine would be dropped, and Alice would not be able to receive the
+  search results. The search engine would not be aware of the black hole, 
+  and would continue to send the packets, which would be dropped at the border.
+  Other sites hosted on the same IP address would also be blocked.
+
+When encountering the destination-based black hole, Alice's IP (since she is in
+  the university network, the BGP would not recognize Alice's IP over the 
+  university's NAT, but take the university's IP address) would be black holed.
+  All packets across BGP into that university would be dropped.
+  All the sudden her entire dorm would not be able to connect to most of the 
+  sites hosted outside of the country, for a while until the administrator 
+  removes the ban. (Usually within a short period to avoid too much 
+  collateral damage)
+
+The later is often been regarded as a punitive measure, and shifts the blames 
+  of entire university's network inaccessibility to Alice for *running into the
+  wall*, and would be a warning to other students to avoid similar behavior.
+  The practice of *collective punishiment* is not uncommon in China since very
+  ancient times to extend the legal actions beyond the individual, and thus 
+  strengthen the social control. <x>@17_earlyChina</x>
+
 The blacklist strategy is more common in the GFW, although whitelist strategy is 
   possible and has been used in the past, such that after 2009 Urumqi riots,
   internet access was blocked in Xinjiang in a way that only less than 100 
@@ -231,8 +288,6 @@ The blacklist strategy is more common in the GFW, although whitelist strategy is
 It lasted for nearly a year, <x>@11_xinjiang</x>
   damages to the economy, society and people's social life were immense.
 
-
-The daemon list contains process names or wildcards that represent what the client is trying to connect to. The client list contains the address, host name, or wildcard to represent the client attempting to connect. The options specify various things to do whenever the rule is triggered [1].
 
 
 The rule shown in figure 1-2 shows how such a rule could be used to block the IP 100.100.100.100. In the rule it states that all processes that the IP address tries to connect to should be denied a connection making a TCP connection impossible to establish. Adding this rule to the “/etc/host.deny” file would IP block the address 100.100.100.100 from the network, and to block other IPs simply replace the IP with another.
