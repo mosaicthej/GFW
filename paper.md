@@ -419,6 +419,187 @@ Note that the *poison* in the tampered servers infers that, those compromises
 Figure 4-3 shows a path where a `.de` TLD is poisoned, via its transit in 
   CN (China) AS 7497 and AS 24151
 
+## V. Survey of Circumvention Tools and Strategies
+
+Various circumvention tools have been developed to bypass the GFW, 
+  gradually increasing in complexity, with trade-offs among dimensions of: 
+  <x>@07_taxonomy</x>
+
+ 1. *Availability*: 
+ there is no use of an anti-censorship technology if 
+ the target users cannot acces it.
+
+ 2. *User-friendliness*: 
+ an often under-explored dimension, 
+ given the large population of users who are not technology-savvy.
+ 
+ 3. *Verifiability*: 
+ how can a user verify that the software is not a monitoring tool 
+ from the government.
+ 
+ 4. *Scope*: how many modes of communication can be covered.
+
+ 5. *Security*: this is the most obvious dimension of an anti-censor.
+
+ 6. *Deniability*: if caught, how can a user deny her involvement.
+
+ 7. *Performance*: how much will throughput and delay be 
+degraded by using the anti-censor. 
+
+Those aspects often has trade-offs against each other, 
+e.g., scope-deniability vs performance-availablity, userfriendliness-denialibilty.
+
+Just like the censorship system, the anti-censorship tools also comes in
+  multiple components targeting different layers of the network stack that
+  works together to bypass the censored network, most times corresponding to
+  a specific censorship mechanism. 
+e.g., secured alternative messaging application to ones raised security concerns
+  (e.g., Signal, Telegram, etc), alternative DNS server for DNS manipulation, 
+  VPN or HTTP proxy for IP blocking, and encrypted tunnel for DPI and 
+  obfuscation for stateful traffic analysis. <x>@48_globalDefeat</x>
+
+![Figure 5-1: Anatomy of anti-censorship system](./res/5.1-anatomy.png)
+
+Note that supporting the circumvention tools might involve out-of-band 
+  communication channels such as hidden part of CD/DVD, floppy disks, USB drives, 
+  or QR codes, URL and barcodes as printed materials, also includes word-of-mouth.
+
+![Figure 5-2: An interactive communication technology adoption channel](./res/5.2-adoption.png)
+
+As figure 5-2 <x>@49_ICTAdopt</x> addressed the people's adoption of most ICTs,
+  it is consisted on the spectrum from micro-individual to macro-social poles:
+  with factors in aspects of *system, technology, audience, social, use, adoption*
+
+![Figure 5-3: A roadmap for understanding the use of circumvention tools](./res/5.3-circumventAdopt.png)
+
+Similar pattern (figure 5-3) <x>@47_circumvention</x> would apply to 
+  circumvention tool use, with more weights on
+  how each other factors would affect the usage, then usage would also have
+  a reciprocal effect on the other factors. 
+
+Noting that each of those factors are important in their own right,
+  the scope of rest of this paper would focus on the technical aspects of the 
+  circumvention tools, and how they interact with the GFW.
+
+There are three commonly used circumvention methods that works together to 
+  bypass the GFW: <x>@07_taxonomy</x>
+- HTTP/CGI proxy
+- VPN (IP tunneling)
+- Re-routing
+- Distributed Hosting
+
+### HTTP/CGI Proxy
+
+HTTP proxying sends HTTP requests through an intermediate proxying server, the
+  client would send exact same HTTP request to the proxy as if it is send to 
+  the target server. The proxy server may re-parse the HTTP request, and sends
+  its own HTTP request to the target server, then returns the response back to
+  the proxy client.
+
+CGI proxy, on the other hand, is a bit obfuscated, it uses a server-side script
+  to perform proxying function. A CGI proxy client sends the requested URL as 
+  payload embedded in the data portion of an HTTP request to CGI server. 
+
+The CGI server then pull out the intended target information from the payload,
+  and sends the request to the target server, then returns the response back to
+  the CGI client.
+
+Those are seen more primarily in the older systems, such as *Freenet* (1999),
+  *UltraSurf* (2002), *DynaWeb* (2002), which mainly uses HTTP proxy, and 
+  *Psiphon* (2006) which uses CGI proxy.
+
+Each has its own issues such as limitations and dependencies on the client 
+  software, and it was designed when GFW was at its infancy, later added features
+  (such as addition of DNS hijacking) would render these tools ineffective.
+
+The ideas of HTTP/CGI still leaves a legacy in more modern circumvention tools.
+
+### Re-routing and Distributed Hosting
+
+Re-routing systems route data through a **series** of proxying servers,
+  encrypting the data again at each proxy, so that a given proxy knows at most
+  either where the traffic came from or where it is going to, but not both.
+
+*Tor* (2002) is the most famous and long-lived re-routing system, 
+  which routes the data through a series of volunteer-run nodes.
+
+However, *Tor* is not a accessible in China since around 2015, it is lately
+  known that TOR's obfuscation leaves a fingerprint that is possible to be 
+  detected. (e.g., fixed packet size, fixed packet interval, etc) Even it is
+  hard to decipher the content of the packets, the fact that it is a TOR packet
+  is enough for such traffic to be blocked. <x>@50_tor_finger</x> The SDN 
+  topology of the GFW has separate nodes that is each specialized at high-efficency
+  relaying and traffic analysis. Similar to the remotely triggered black hole
+  model, the analysing node triggers the blocking node to block the TOR traffic.
+
+Usability and QoS issues also makes the TOR less attractive to the general
+  public, combined with social engineering and legal repercussions as deterrents,
+  users are less likely to participate in the TOR network. 
+
+On the other hand, the GFW is scaling up by with increasing control 
+  and higher computation power, with the decreasing number of participants 
+  in P2P networks, it is not surprising that the peers in such networks are
+  likely to be state-controlled.
+
+Distributed hosting is more of a server effort than client effort, and usually
+  for the purpose of mitigating DDoS and single-point-of-failure issues.
+  It is effective against ip blocking.
+
+However, depending on the CDN, there are cases that entire CDN is blocked 
+  by the GFW, such as github was not blocked but had connection issues in China, 
+  as its CDN, *Fastly*, was blocked. <x>@19_detect</x> 
+
+At another case, CDNs might chose to practice geo-block due to economical
+  pressures. In 2018 researchers found that many CDNs had server-side blocking
+  with China, Iran, Syria, Sudan, Cuba, Russia and North Korea. <x>@51_CDN403</x>
+
+### Tunneling
+
+As of today, the most common circumvention tool is use of a VPN tunneling with
+  self-hosted VPS or commercial shared VPN services.
+
+The user usually purchases a (virtual) machine in a place without censorship
+that can be accessed remotely, and installs tunneling software 
+(e.g., openSSH, etc.) on the machine. 
+
+For each session where the user needs to access uncensored content, the user 
+  would establish a SSH connection to the machine, and set up a SOCKS proxy 
+  on the client side, then redirect partial or all of the traffic through the
+  tunnel to their VPS, then the VPS would relay the request and response between
+  the client and the target server as a bridge.
+
+It is by far the most effective and secure way to bypass the GFW, since the 
+  VPS tends to be privately owned, and the traffic is encrypted end-to-end.
+  Taking down one VPS would only affect the users on that VPS, but it is 
+  relatively cheap to switch to another VPS, compares to the increasing overhead
+  of the GFW to block all the VPS-es.
+
+The only known way for the GFW to confronting it is to perform deep packet 
+  inspection and traffic analysis that recognizes the traffic pattern within 
+  the tunnel, and block the source IP address of the VPS. 
+  (we are excluding the social-engineering and legal repercussions in this paper)
+
+**Shadowsocks** (2012) is an open-sourced SOCKS protocols framework that is 
+  popular in China. It has many open-source forks in various languages 
+  <x>@36_SS-py</x> <x>@37_SS-rust</x> <x>38_SS-go</x> <x>39_SS-cs</x>.  
+According to a research survey in July 2015, of 371 faculty members and students 
+  from Tsinghua Univer-sity, 21% used Shadowsocks to bypass censorship in China.
+<x>@50_googleScholar</x>
+
+The popularity of Shadowsocks stems from its simplicity. 
+Its lightweight design imposes minimal overhead on proxied traffic and 
+  makes it easy to implement on a variety of platforms. 
+A large, profit-incentivized proxy reseller market, 
+  as well as numerous tutorials and one-click installation scripts, 
+  have reduced the difficulty of installing and using Shadowsocks, 
+  and made it popular even among non-technical users.
+
+Researchers found that the GFW utilizes an *active probing* mechanism to 
+  detect the Shadowsocks traffic, and then block the source IP addresses of 
+  the VPS-es. <x>@40_SSProbe</x> Still, the blocks are only anecdotally reported,
+  and continuing development of Shadowsocks to improve its encryption and 
+  obfuscation with community efforts. 
+
 refs:
     
 ```bib
