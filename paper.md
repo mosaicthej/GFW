@@ -135,23 +135,93 @@ Recent standards like HTTP/2 and QUIC would also make the GFW's job harder as
   increases chances of false negatives, yielding slightly lower blocking rates.
   We would discuss these findings in next sections.
 
-## III. IP Blocking
+## III. IP Filtering
 
-The first and most straightforward mechanism used by the GFW is IP blocking [3] which is exactly what it sounds like. In this the packets being transmitted through a filtering router are inspected and the sender and receiver IP addresses are checked to see if the packet should be allowed through based on whether or not these IP addresses are blocked or not. In the event that one such packet is received then it will not be allowed through preventing the connection from being established thus preventing the traffic from getting through.
+IP filtering is the mechanism which has least operational cost and lowest level 
+of granularity. <x>@ref07</x> 
+If not administrated properly, 
+it would result in high false positive and false negative rates. Where:
+
+- **False Positive**: Legitimate traffic is blocked.
+This mostly happens to multiple sites are hosted on a shared IP address,
+  when blocking one site, all other sites on the same IP would be blocked
+  disregarding the content, causes unnecessary collateral damage, including
+  potential impact on the economy and innovation.
+- **False Negative**: Site that is deemed to be blocked is not blocked,
+This mostly happens when the site is hosted on a dynamic IP address, 
+  or the site is hosted on a CDN.
+
+The IP Filtering is applied as first layer of defense, such as sites that have
+  a fixed IP address such as google.com or US Senate. 
+
+It is also applied to be a last resort, when other mechanisms fails to block
+  the traffic, this is essentially the case to deal with the use of VPNs as
+  a circumvention tool, in combination with active probing.
 
 ### Implementing IP Blocking
 
-In order to block certain IP addresses each of the filtering routers needs a list of banned IP addresses so that it can detect them. A way this could be done at scale is to store in a central database all banned IPs and then distributed to the filtering routers on some regular interval. In this assumption an IP address would either be added manually if some overseer of the system decided a website should be banned or a filtering router could potentially add a new IP to ban if many illicit packets are received from an IP address. The information that each router needs to store depends on how exactly the IP blocking is implemented which could be TCP wrapping [2]. In TCP wrapping there are two files called “/etc/host.allow” and “/etc/hosts.deny” which contain rules for how an IP address should be treated [1]. For the purpose of blocking an IP address the “/etc/hosts.allow” file is not very useful, but the “/etc/hosts.deny” file is very useful. In this file there are many lines in the format shown in figure 1-1.
+IP blocking, including other filtering mechanisms, is introducing *black hole*
+  in the network which drops the packets silently once the ip is recognized as
+  a blacklisted ip.
+
+The routers would need a list of banned IP addresses, to adapt to the dynamic
+  nature of the internet, the list would be updated periodically, 
+  and the routers would be able to update the list in real-time.
+
+One implementation is have a central database with entire list of banned IPs, 
+  and with the knowledge of complete network topology within the country, 
+  it would distribute the entries to routers in a way that both balances the
+  load and ensures consistent filtering. The per-router distribution would also
+  rotate the list to avoid bottleneck and synchronization issues.
+
+TCP wrapping is a common method to implement IP blocking, where the routers
+  would have a list of rules to block the IP addresses, and the rules would 
+  be updated periodically. The rules would be in shape of files in `/etc/hosts.deny`
+  and `/etc/hosts.allow` files, constituting a blacklist and whitelist respectively.
 
 ![Figure 3-1: Format of rule used in /etc/host file.](res/3.1-etc-host.jpg)
 
-The daemon list contains process names or wildcards that represent what the client is trying to connect to. The client list contains the address, host name, or wildcard to represent the client attempting to connect. The options specify various things to do whenever the rule is triggered [1].
-
-The daemon list contains process names or wildcards that represent what the client is trying to connect to. The client list contains the address, host name, or wildcard to represent the client attempting to connect. The options specify various things to do whenever the rule is triggered [1].
-
 ![Figure 3-2: An example rule to show how an IP could be banned.](res/3.2-rule.png)
 
-    The rule shown in figure 1-2 shows how such a rule could be used to block the IP 100.100.100.100. In the rule it states that all processes that the IP address tries to connect to should be denied a connection making a TCP connection impossible to establish. Adding this rule to the “/etc/host.deny” file would IP block the address 100.100.100.100 from the network, and to block other IPs simply replace the IP with another.
+In this sample entry of `/etc/hosts.deny` file, the rule is to block the IP address
+  that is trying to connect to the host. The rule is in shape of `daemon: client: options`
+  where the daemon is the process name or wildcard that the client is trying to connect to,
+  the client is the address, host name, 
+  or wildcard to represent the client attempting to connect. <x>@ref12</x>
+
+![Figure 3-3: Destination-based Black Hole Filtering with Remote Triggering](res/3-3-cisco.png)
+
+![Figure 3-4: Source-based Black Hole Filtering with Remote Triggering](res/3-4-cisco-source.png)
+
+On the BGP level, the routers are configured to drop the packets from matched
+  IP addresses, such black-holed IP addresses involves 3 steps: <x>@ref13</x> <x>@ref14</x>
+- **Setup (preparation)**: A trigger is a special device that is installed at the NOC 
+  (Network Operations Center) exclusively for the purpose of triggering a black hole. 
+  The trigger must have an BGP peering relationship with all the edge routers, and is
+  configured to redistribute static routes to its BGP peers, sends the static route by
+  means of an BGP routing update.
+
+  The Provider Edges (PEs) must have a static route for an unused IP address space. 
+  For example, 192.0.2.1/32 is set to Null0 (which is not used as a deployed IP address)
+
+  Loose URPF (Unicast Reverse Path Forwarding) is configured on all external facing 
+  interfaces of PEs.
+
+- **Triggering**: When an administrator adds a static route to the trigger, which 
+  redistributes the route by sending a BGP update to all its BGP peers, setting 
+  the next hop to the target destination address 
+The blacklist strategy is more common in the GFW, although whitelist strategy is 
+  possible and has been used in the past, such that after 2009 Urumqi riots,
+  internet access was blocked in Xinjiang in a way that only less than 100 
+  local sites, such as banks and local government sites were accessible. <x>@ref10</x>
+It lasted for nearly a year, <x>@ref11</x>
+  damages to the economy, society and people's social life were immense.
+
+
+The daemon list contains process names or wildcards that represent what the client is trying to connect to. The client list contains the address, host name, or wildcard to represent the client attempting to connect. The options specify various things to do whenever the rule is triggered [1].
+
+
+The rule shown in figure 1-2 shows how such a rule could be used to block the IP 100.100.100.100. In the rule it states that all processes that the IP address tries to connect to should be denied a connection making a TCP connection impossible to establish. Adding this rule to the “/etc/host.deny” file would IP block the address 100.100.100.100 from the network, and to block other IPs simply replace the IP with another.
 
 ### Flaws in IP Blocking
 
@@ -218,5 +288,55 @@ refs:
         pubinfo: Danezis, G., Golle, P. (eds) Privacy Enhancing Technologies. PET 2006. Lecture Notes in Computer Science, vol 4258. Springer, Berlin, Heidelberg. 
         URL: https://doi.org/10.1007/11957454_2
         accessed: 2024-04-01        
+    
+    - id: ref07
+        title: A Taxonomy of Internet Censorship and Anti-Censorship
+        author: Leberknight, Christopher S., et al.
+        pubinfo: Fifth International Conference on Fun with Algorithms (pp. 52-64).
+        URL: https://www.princeton.edu/~chiangm/anticensorship.pdf
+        accessed: 2024-04-01
+
+    - id: ref08
+        title: Poisoning the Well
+        author: Farnan, O., Darer, A., Wright, J.
+        pubinfo: Proceedings of the 2016 ACM on Workshop on Privacy in the Electronic Society - WPES'16. pp. 95–98. 
+        URL: https://doi.org/10.1145/2994620.2994636
+        accessed: 2024-04-01
+
+    - id: ref09
+        title: IT Security in the USA, Japan and China, A Study of Initiatives and Trends within.
+        author: Ahlgren, M., Breidne, M., Hektor, A.
+        accessed: 2024-04-01
+    
+    - id: ref10
+        title: The Missing Link
+        author: Jia, Cui (2009 Nov.)
+        pubinfo: China Daily
+        accessed: 2024-04-03
+    
+    - id: ref11
+        title: Xinjiang Internet Restored Starting Today 
+        pubinfo: News.china.com.cn
+        URL: web.archive.org/web/20100517023849/http://news.china.com.cn/txt/2010-05/14/content_20038848.htm
+        accessed: 2024-04-03
+    
+    - id: ref12
+        title: hosts.den(5) - Linux Man Page
+        author: Wietse Venema
+        pubinfo: Free Software Foundation, Inc.
+        URL: https://linux.die.net/man/5/hosts.deny
+
+    - id: ref13
+        title: Remotely Triggered Black Hole Filtering - Destination-Based and Source-Based
+        author: Cisco Systems, Inc. (2005)
+        pubinfo: Cisco Systems, Inc.
+        URL: https://www.cisco.com/c/dam/en_us/about/security/intelligence/blackhole.pdf
+        accessed: 2024-04-03
+    
+    - id: ref14
+        title: RFC 5635 - Remote Triggered Black Hole filtering with uRPF
+        author: Kumari, W., et al. (2009)
+    
+
     
 ---
