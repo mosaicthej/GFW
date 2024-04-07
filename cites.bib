@@ -226,3 +226,368 @@
       archivePrefix={arXiv},
       primaryClass={cs.CR}
 }
+
+@article{24_poisoning2012,
+  author = {Anonymous},
+  title = {The collateral damage of internet censorship by DNS injection},
+  year = {2012},
+  issue_date = {July 2012},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  volume = {42},
+  number = {3},
+  issn = {0146-4833},
+  url = {https://doi.org/10.1145/2317307.2317311},
+  doi = {10.1145/2317307.2317311},
+  abstract = {Some ISPs and governments (most notably the Great Firewall of China) use DNS injection to block access to "unwanted" websites. The censorship tools inspect DNS queries near the ISP's boundary routers for sensitive domain keywords and inject forged DNS responses, blocking the users from accessing censored sites, such as twitter and facebook. Unfortunately this causes collateral damage, affecting communication beyond the censored networks when outside DNS traffic traverses censored links. In this paper, we analyze the causes of the collateral damages and measure the Internet to identify the injecting activities and their effect. We find 39 ASes in China injecting forged DNS replies. Furthermore, 26 of 43,000 measured open resolvers outside China, distributed in 109 countries, may suffer some collateral damage from these forged replies. Different from previous work that considers the collateral damage being limited to queries to root servers (F, I, J) located in China, we find that most collateral damage arises when the paths between resolvers and some TLD name servers transit through ISPs in China.},
+  journal = {SIGCOMM Comput. Commun. Rev.},
+  month = {jun},
+  pages = {21–27},
+  numpages = {7},
+  keywords = {collateral damage, dns, great firewall of china, internet censorship, internet measurement, packet injection}
+}
+
+@inproceedings{25_evolCensor,
+  author = {Waheed, Asim and Qunaibi, Sara and Barradas, Diogo and Weinberg, Zachary},
+  title = {Darwin's Theory of Censorship: Analysing the Evolution of Censored Topics with Dynamic Topic Models},
+  year = {2022},
+  isbn = {9781450398732},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3559613.3563206},
+  doi = {10.1145/3559613.3563206},
+  abstract = {We present a statistical analysis of changes in the Internet censorship policy of the government of India from 2016 to 2020. Using longitudinal observations of censorship collected by the ICLab censorship measurement project, together with historical records of web page contents collected by the Internet Archive, we find that machine classification techniques can detect censors' reactions to events without prior knowledge of what those events are. However, gaps in ICLab's observations can cause the classifier to fail to detect censored topics, and gaps in the Internet Archive's records can cause it to misidentify them.},
+  booktitle = {Proceedings of the 21st Workshop on Privacy in the Electronic Society},
+  pages = {103–108},
+  numpages = {6},
+  keywords = {censorship, internet measurement, topic modelling},
+  location = {Los Angeles, CA, USA},
+  series = {WPES'22}
+}
+
+@inproceedings{26_gfwSS2020,
+  author = {Alice and Bob and Carol and Beznazwy, Jan and Houmansadr, Amir},
+  title = {How China Detects and Blocks Shadowsocks},
+  year = {2020},
+  isbn = {9781450381383},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3419394.3423644},
+  doi = {10.1145/3419394.3423644},
+  abstract = {Shadowsocks is one of the most popular circumvention tools in China. Since May 2019, there have been numerous anecdotal reports of the blocking of Shadowsocks from Chinese users. In this study, we reveal how the Great Firewall of China (GFW) detects and blocks Shadowsocks and its variants. Using measurement experiments, we find that the GFW uses the length and entropy of the first data packet in each connection to identify probable Shadowsocks traffic, then sends seven different types of active probes, in different stages, to the corresponding servers to test whether its guess is correct.We developed a prober simulator to analyze the effect of different types of probes on various Shadowsocks implementations, and used it to infer what vulnerabilities are exploited by the censor. We fingerprinted the probers and found differences relative to previous work on active probing. A network-level side channel reveals that the probers, which use thousands of IP addresses, are likely controlled by a set of centralized structures.Based on our gained understanding, we present a temporary workaround that successfully mitigates the traffic analysis attack by the GFW. We further discuss essential strategies to defend against active probing. We responsibly disclosed our findings and suggestions to Shadowsocks developers, which has led to more censorship-resistant tools.},
+  booktitle = {Proceedings of the ACM Internet Measurement Conference},
+  pages = {111–124},
+  numpages = {14},
+  keywords = {Great Firewall of China, Shadowsocks, active probing, censorship circumvention},
+  location = {Virtual Event, USA},
+  series = {IMC '20}
+}
+
+@INPROCEEDINGS{27_censorWeapon,
+  author={Bock, Kevin and Bharadwaj, Pranav and Singh, Jasraj and Levin, Dave},
+  booktitle={2021 IEEE Security and Privacy Workshops (SPW)}, 
+  title={Your Censor is My Censor: Weaponizing Censorship Infrastructure for Availability Attacks}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={398-409},
+  keywords={Privacy;Open Access;Weapons;Conferences;Censorship;Internet;Security;censorship;denial of service;weaponizing;availability attacks},
+  doi={10.1109/SPW53761.2021.00059}
+}
+
+@inproceedings {28_GFWEncrypt2023,
+  author = {Mingshi Wu and Jackson Sippe and Danesh Sivakumar and Jack Burg and Peter Anderson and Xiaokang Wang and Kevin Bock and Amir Houmansadr and Dave Levin and Eric Wustrow},
+  title = {How the Great Firewall of China Detects and Blocks Fully Encrypted Traffic},
+  booktitle = {32nd USENIX Security Symposium (USENIX Security 23)},
+  year = {2023},
+  isbn = {978-1-939133-37-3},
+  address = {Anaheim, CA},
+  pages = {2653--2670},
+  url = {https://www.usenix.org/conference/usenixsecurity23/presentation/wu-mingshi},
+  publisher = {USENIX Association},
+  month = aug
+}
+
+@online{29_SS2020,
+  author = {Anonymous and Anonymous and  Anonymous and David Fifield and Amir Houmansadr},
+  title={{How China Detects and Blocks Shadowsocks}},
+  year = 2019,
+  month = dec,
+  url = {https://gfw.report/blog/gfw_shadowsocks},
+  lastaccessed = {September 2020},
+}
+
+@article{30_SSActiveProb,
+  title={{ACER}: detecting {Shadowsocks} server based on active probe technology},
+  author={Jiaxing Cheng and Ying Li and Cheng Huang and Ailing Yu and Tao Zhang},
+  journal={Journal of Computer Virology and Hacking Techniques},
+  volume={16},
+  number={3},
+  pages={217--227},
+  year={2020},
+  publisher={Springer},
+  url = {https://link.springer.com/article/10.1007/s11416-020-00353-z},
+}
+
+@online{31_SSRedirectStream,
+  author = {Zhiniang Peng},
+  title = {Redirect attack on {Shadowsocks} stream ciphers},
+  year = {2020},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  url = {https://github.com/edwardz246003/shadowsocks},
+  lastaccessed = {June 2020},
+}
+
+@online{32_obfs2Probe,
+  title = {{GFW} actively probes obfs2bridges},
+  author = {Philipp Winter},
+  year = {2013},
+  month = mar,
+  url = {https://bugs.torproject.org/8591},
+  lastaccessed = {February 2020},
+}
+
+
+@inproceedings{33_VPNGate,
+  author = {Daiyuu Nobori and Yasushi Shinjo},
+  booktitle = {Networked Systems Design and Implementation},
+  publisher = {USENIX},
+  title = {{VPN Gate}: A Volunteer-Organized Public {VPN} Relay System with Blocking Resistance for Bypassing Government Censorship Firewalls},
+  year = {2014},
+  url = {https://www.usenix.org/system/files/conference/nsdi14/nsdi14-paper-nobori.pdf},
+}
+
+
+@inproceedings{34_yourState,
+  author = {Wang, Zhongjie and Cao, Yue and Qian, Zhiyun and Song, Chengyu and Krishnamurthy, Srikanth V.},
+  title = {Your State is Not Mine: A Closer Look at Evading Stateful Internet Censorship},
+  year = {2017},
+  isbn = {9781450351188},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3131365.3131374},
+  doi = {10.1145/3131365.3131374},
+  booktitle = {Proceedings of the 2017 Internet Measurement Conference},
+  pages = {114–127},
+  numpages = {14},
+  keywords = {the great firewall of china, INTANG, TCP, traffic manipulation, censorship circumvention},
+  location = {London, United Kingdom},
+  series = {IMC ’17}
+}
+
+@online{35_SS-rustn,
+  author = {zonyitoo},
+  title = {Shadowsocks-rust v1.8.5},
+  url = {https://github.com/shadowsocks/shadowsocks-rust/releases/tag/v1.8.5},
+}
+
+@online{36_SS-py,
+  author = {{Shadowsocks developers}},
+  title = {{Shadowsocks}},
+  url = {https://github.com/shadowsocks/shadowsocks/tree/master},
+}
+
+@online{37_SS-rust,
+  author = {Shadowsocks-rust developers},
+  title = {Shadowsocks-rust},
+  url = {https://github.com/shadowsocks/shadowsocks-rust},
+}
+
+@online{38_SS-go,
+  author = {go-Shadowsocks2 developers},
+  title = {go-Shadowsocks2},
+  url = {https://github.com/shadowsocks/go-shadowsocks2},
+}
+
+@online{39_SS-cs,
+  author = {shadowsocksr-csharp developers},
+  title = {shadowsocksr-csharp},
+  url = {https://github.com/shadowsocksrr/shadowsocksr-csharp},
+}
+
+@online{40_v2ray,
+  author = {{V2Ray developers}},
+  title = {{V2Ray}},
+  url = {https://github.com/v2fly/v2ray-core},
+}
+
+@online{41_lshadowsocks,
+  author = {{Shadowsocks developers}},
+  title = {{Shadowsocks-libev}},
+  url = {https://github.com/shadowsocks/shadowsocks-libev},
+}
+
+
+@inproceedings{42_torBridgeBlock,
+  author = {Arun Dunna and Ciar\'{a}n O'Brien and Phillipa Gill},
+  title = {Analyzing {China}'s Blocking of Unpublished {Tor} Bridges},
+  booktitle = {Free and Open Communications on the Internet},
+  publisher = {USENIX},
+  year = {2018},
+  url = {https://www.usenix.org/system/files/conference/foci18/foci18-paper-dunna.pdf},
+}
+
+@mastersthesis{43_MPTCP,
+  title = {Multipath {TCP} with real Smartphone applications},
+  author = {Baerts, Matthieu and De Coninck, Quentin},
+  school = {Université catholique de Louvain},
+  year = 2015,
+  url = {https://dial.uclouvain.be/memoire/ucl/object/thesis:366},
+}
+
+@ARTICLE{44_DPI-SS,
+  author = {Xuemei Zeng and Xingshu Chen and Guolin Shao and Tao He and Zhenhui Han and Yi Wen and Qixu Wang},
+  journal = {IEEE Access},
+  title = {Flow Context and Host Behavior Based {Shadowsocks}'s Traffic Identification},
+  year = {2019},
+  volume = {7},
+  number = {},
+  pages = {41017-41032},
+  keywords = {Big Data;cloud computing;computer network security;telecommunication traffic;large-scale network environment;host behavior;SS flows;cloud virtual private server services;cloud service providers;public cloud platforms;novel SS detection method;Data Transparent Transmission;Invisible Negotiation Process;local network administrators;darknet transactions;cyber-attacks;illegal network activities;illegal network activists;anonymous proxy solutions;anonymous proxy services;flow context;SS traffic;experimental data sets;big data platform;NTCI-BDP data platform;VPSs;campus network;SS running environment;association techniques;unassociated domain names;flow burst;detection model;hosts;12-dimensional features;Protocols;Feature extraction;Cloud computing;Servers;Encryption;Big Data;Big Data association;cloud-based anonymous proxy;flow burst;flow context;host behavior;traffic identification;shadowsocks},
+  doi = {10.1109/ACCESS.2019.2907149},
+  ISSN = {2169-3536},
+}
+
+@inproceedings{45_seeObfs,
+  author = {Liang Wang and Kevin P. Dyer and Aditya Akella and Thomas Ristenpart and Thomas Shrimpton},
+  title = {Seeing through Network-Protocol Obfuscation},
+  booktitle = {Computer and Communications Security},
+  year = {2015},
+  publisher = {ACM},
+  url = {http://pages.cs.wisc.edu/~liangw/pub/ccsfp653-wangA.pdf},
+}
+
+@inproceedings{46_gfw-discover,
+  author = {Roya Ensafi and David Fifield and Philipp Winter and Nick Feamster and Nicholas Weaver and Vern Paxson},
+  title = {Examining How the {Great Firewall} Discovers Hidden Circumvention Servers},
+  booktitle = {Internet Measurement Conference},
+  publisher = {ACM},
+  year = {2015},
+  url = {http://conferences2.sigcomm.org/imc/2015/papers/p445.pdf},
+}
+
+@article{47_circumvention,
+  author = {Yi Mou and Kevin Wu and David Atkin},
+  title ={Understanding the use of circumvention tools to bypass online censorship},
+  journal = {New Media \& Society},
+  volume = {18},
+  number = {5},
+  pages = {837-856},
+  year = {2016},
+  doi = {10.1177/1461444814548994},
+  URL = { https://doi.org/10.1177/1461444814548994},
+  eprint = { https://doi.org/10.1177/1461444814548994},
+  abstract = { Circumvention tools designed to bypass online censorship—such as simple web proxies, virtual private network service, and so on—are frequently used in countries whose governments impose heavy Internet censorship. Around 18 million Internet users in China are currently using those tools to bypass the Great Firewall and access unblocked online content. In a pioneering empirical investigation of unblocked information seeking in China’s censored online environment, the present study systematically examines a wide range of macro-social and micro-individual factors which affect the use of circumvention tools to bypass Internet censorship under the guidance of the interactive communication technology adoption model. The results reveal that, with the exception of social trust, macro-social factors have only a modest influence on the use of circumvention tools. In contrast, micro-individual-level variables—including perceived technology fluidity, gratifications, and selected demographic variables—play a much larger role in our multivariate model. Theoretical and practical implications are discussed. }
+}
+
+@article{48_globalDefeat,
+  title={Defeat Internet censorship: overview of advanced technologies and products},
+  author={Global Internet Freedom Consortium and others},
+  journal={GIFC, White Paper},
+  year={2007}
+}
+
+@article{49_ICTAdopt,
+  author = {Lin, Carolyn A.},
+  title = {An Interactive Communication Technology Adoption Model},
+  journal = {Communication Theory},
+  volume = {13},
+  number = {4},
+  pages = {345-365},
+  doi = {https://doi.org/10.1111/j.1468-2885.2003.tb00296.x},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1468-2885.2003.tb00296.x},
+  eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1468-2885.2003.tb00296.x},
+  abstract = {In the evolving research arena of mediated communication technology adoption and uses, one of the most valuable developments involves the increased integration of distinct communication research traditions. This emerging fusion presents an unprecedented opportunity for communication researchers to share, confer, and challenge the “native” tradition that each has followed. This article proposes an integrated research model and explains how it can serve as the basis for mediated communication technology adoption research. In particular, this proposed model is intended to provide a research framework for studying the factors that help shape adoption decisions of various communication technologies and the potential impact of technology adoption on the social system, audiences, and use patterns.},
+  year = {2003}
+}
+
+@article{50_tor_finger,
+  title = {The rise of website fingerprinting on Tor: Analysis on techniques and assumptions},
+  journal = {Journal of Network and Computer Applications},
+  volume = {212},
+  pages = {103582},
+  year = {2023},
+  issn = {1084-8045},
+  doi = {https://doi.org/10.1016/j.jnca.2023.103582},
+  url = {https://www.sciencedirect.com/science/article/pii/S1084804523000012},
+  author = {Mohamad Amar Irsyad {Mohd Aminuddin} and Zarul Fitri Zaaba and Azman Samsudin and Faiz Zaki and Nor Badrul Anuar},
+  keywords = {Security, Privacy, Anonymity, Tor, Traffic analysis, Website fingerprinting},
+  abstract = {Tor is one of the most popular anonymity networks that allows Internet users to hide their browsing activity. Hiding browsing activity is essential for Internet users to increase their privacy. Only Tor users should know the website they are browsing. However, an attacker can utilise the Website Fingerprinting (WF) attack to identify webpages browsed by Tor users. WF is a significant threat to Internet users' privacy as Tor should conceal the browsed webpages' information. Existing WF studies focused on the investigation to improve the identification capabilities, overlooking the systematic discussion and assessment of existing techniques. In addition, existing surveys and analyses reviewed insufficient variation of WF on Tor techniques. Therefore, this survey paper aims to provide a systematic and thorough review of various WF on Tor techniques. First, we discuss WF on Tor techniques in five primary aspects: threat model, victim target, website realm, traffic feature, and traffic classifier. We analyse and classify the reviewed studies on each WF aspect. The classification facilitates in-depth understanding and comparison between WF on Tor techniques. Furthermore, this paper investigates nine assumptions exercised in WF on Tor: closed-world, sequential browsing, isolated traffic, replicability, traffic parsing, passive webpage, disabled cache, static content, and single webpage. These assumptions limit the WF on Tor's practicality in real-world scenarios. Our analysis and classification indicate that most WF on Tor studies apply these assumptions despite being only suitable in controlled environments or laboratory experiments. In addition, most reviewed studies often lack transparency on the assumptions exercised in their studies, risking misunderstanding the WF on Tor techniques' actual practicality. At the end of this survey, we present WF on Tor taxonomy and highlight 21 WF on Tor research's limitations and gaps with plausible recommendations. We also discuss the WF on Tor studies' contribution category and development phase.}
+}
+
+@inproceedings{51_CDN403,
+  author = {McDonald, Allison and Bernhard, Matthew and Valenta, Luke and VanderSloot, Benjamin and Scott, Will and Sullivan, Nick and Halderman, J. Alex and Ensafi, Roya},
+  title = {403 Forbidden: A Global View of CDN Geoblocking},
+  year = {2018},
+  isbn = {9781450356190},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3278532.3278552},
+  doi = {10.1145/3278532.3278552},
+  abstract = {We report the first wide-scale measurement study of server-side geographic restriction, or geoblocking, a phenomenon in which server operators intentionally deny access to users from particular countries or regions. Many sites practice geoblocking due to legal requirements or other business reasons, but excessive blocking can needlessly deny valuable content and services to entire national populations.To help researchers and policymakers understand this phenomenon, we develop a semi-automated system to detect instances where whole websites were rendered inaccessible due to geoblocking. By focusing on detecting geoblocking capabilities offered by large CDNs and cloud providers, we can reliably distinguish the practice from dynamic anti-abuse mechanisms and network-based censorship. We apply our techniques to test for geoblocking across the Alexa Top 10K sites from thousands of vantage points in 177 countries. We then expand our measurement to a sample of CDN customers in the Alexa Top 1M.We find that geoblocking occurs across a broad set of countries and sites. We observe geoblocking in nearly all countries we study, with Iran, Syria, Sudan, Cuba, and Russia experiencing the highest rates. These countries experience particularly high rates of geoblocking for finance and banking sites, likely as a result of U.S. economic sanctions. We also verify our measurements with data provided by Cloudflare, and find our observations to be accurate.},
+  booktitle = {Proceedings of the Internet Measurement Conference 2018},
+  pages = {218–230},
+  numpages = {13},
+  location = {Boston, MA, USA},
+  series = {IMC '18}
+}
+
+@inproceedings{52_googleScholar,
+  author = {Lu, Zhen and Li, Zhenhua and Yang, Jian and Xu, Tianyin and Zhai, Ennan and Liu, Yao and Wilson, Christo},
+  year = {2017},
+  month = {12},
+  pages = {8-14},
+  title = {Accessing google scholar under extreme internet censorship: a legal avenue},
+  doi = {10.1145/3154448.3154450}
+}
+
+@inproceedings{53_quicCensor,
+  author = {Elmenhorst, Kathrin and Sch\"{u}tz, Bertram and Aschenbruck, Nils and Basso, Simone},
+  title = {Web censorship measurements of HTTP/3 over QUIC},
+  year = {2021},
+  isbn = {9781450391290},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3487552.3487836},
+  doi = {10.1145/3487552.3487836},
+  abstract = {Web traffic censorship limits the free access to information, making it a global human rights issue. The introduction of HTTP/3 (HTTP over QUIC) yields promising expectations to counteract such interference, due to its novelty, build-in encryption, and faster connection establishment. To evaluate this hypothesis and analyze the current state of HTTP/3 blocking, we extended the open-source censorship measurement-tool OONI with an HTTP/3 module. Using an input list of possibly-blocked websites, real-world measurements with HTTPS and HTTP/3 were conducted in selected Autonomous Systems in China, Iran, India, and Kazakhstan. The presented evaluation assesses the different blocking methodologies employed for TCP/TLS versus the ones employed for QUIC. The results reveal dedicated UDP blocking in Iran and major IP blocklisting affecting QUIC in China and India.},
+  booktitle = {Proceedings of the 21st ACM Internet Measurement Conference},
+  pages = {276–282},
+  numpages = {7},
+  location = {Virtual Event},
+  series = {IMC '21}
+}
+
+@inproceedings{54_QUIC,
+  author = {Langley, Adam and Riddoch, Alistair and Wilk, Alyssa and Vicente, Antonio and Krasic, Charles and Zhang, Dan and Yang, Fan and Kouranov, Fedor and Swett, Ian and Iyengar, Janardhan and Bailey, Jeff and Dorfman, Jeremy and Roskind, Jim and Kulik, Joanna and Westin, Patrik and Tenneti, Raman and Shade, Robbie and Hamilton, Ryan and Vasiliev, Victor and Chang, Wan-Teh and Shi, Zhongyi},
+  title = {The QUIC Transport Protocol: Design and Internet-Scale Deployment},
+  year = {2017},
+  isbn = {9781450346535},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3098822.3098842},
+  doi = {10.1145/3098822.3098842},
+  abstract = {We present our experience with QUIC, an encrypted, multiplexed, and low-latency transport protocol designed from the ground up to improve transport performance for HTTPS traffic and to enable rapid deployment and continued evolution of transport mechanisms. QUIC has been globally deployed at Google on thousands of servers and is used to serve traffic to a range of clients including a widely-used web browser (Chrome) and a popular mobile video streaming app (YouTube). We estimate that 7\% of Internet traffic is now QUIC. We describe our motivations for developing a new transport, the principles that guided our design, the Internet-scale process that we used to perform iterative experiments on QUIC, performance improvements seen by our various services, and our experience deploying QUIC globally. We also share lessons about transport design and the Internet ecosystem that we learned from our deployment.},
+  booktitle = {Proceedings of the Conference of the ACM Special Interest Group on Data Communication},
+  pages = {183–196},
+  numpages = {14},
+  location = {Los Angeles, CA, USA},
+  series = {SIGCOMM '17}
+}
+
+@misc{55_HTTP3,
+    series =    {Request for Comments},
+    number =    9114,
+    howpublished =  {RFC 9114},
+    publisher = {RFC Editor},
+    doi =       {10.17487/RFC9114},
+    url =       {https://www.rfc-editor.org/info/rfc9114},
+    author =    {Mike Bishop},
+    title =     {{HTTP/3}},
+    pagetotal = 57,
+    year =      2022,
+    month =     jun,
+    abstract =  {The QUIC transport protocol has several features that are desirable in a transport for HTTP, such as stream multiplexing, per-stream flow control, and low-latency connection establishment. This document describes a mapping of HTTP semantics over QUIC. This document also identifies HTTP/2 features that are subsumed by QUIC and describes how HTTP/2 extensions can be ported to HTTP/3.},
+}
+
