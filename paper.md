@@ -413,6 +413,10 @@ Note that the *poison* in the tampered servers infers that, those compromises
   As some paths between resolvers and some TLD (Top Level Domain) name servers 
   transit through (affected) ISPs in China. <x>24_dnsGlobal</x>
 
+![Figure 4-3: The Path where a .de TLD is poisoned](res/4.3-de-poison.png)
+
+Figure 4-3 shows a path where a `.de` TLD is poisoned, via its transit in 
+  CN (China) AS 7497 and AS 24151
 
 refs:
     
