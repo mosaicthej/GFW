@@ -18,22 +18,30 @@ The focus of this paper is to examine the mechanisms in use by the GFW
   focusing on their implementation in network and transportation layer, 
   looking at flaws and main strategies of circumventing the GFW.
 
-**Keywords** -- GFW of China, IDS, IP blocking, DNS manipulation, URL filtering, Keyword filtering, RST packets, Circumvention
+**Keywords** -- 
+  GFW of China, IDS, IP blocking, DNS manipulation, URL filtering, 
+  Keyword filtering, RST packets, Circumvention
 
 ## I. Introduction
 
-*Across the **Great Wall** can reach every corner in the world.* <x>@ref01</x> 
+*Across the **Great Wall** can reach every corner in the world.* <x>@01_hist1986</x> 
 This email message sent to Karlsruhe University of Germany, 
 from Beijing in September 1987, marks China’s entrance into the Internet. 
 Ironically, as of December 2022, with 1.07 billion Internet users domestically,
-<x>@ref02</x> it would be nearly impossible to reach to anywhere on Internet 
+<x>@02_stat2022</x> it would be nearly impossible to reach to anywhere on Internet 
 without break across the GFW, the Great Firewall of China. 
 
 The GFW comprises of intricate and multifaceted mechanisms,
-which ranges over technical, societal and political aspects. 
-Beyond being a technical barrier, the Wall also includes legal ramifications for those attempting to bypass it, mandatory content regulations responsibilities for platform hosts, and a pervasive surveillance network that monitors digital footprints, and subtly fabricating the psychological norms, shapes thought and molds behavior of the users.
+  which ranges over technical, societal and political aspects. 
+Beyond being a technical barrier, the Wall also includes legal ramifications 
+  for those attempting to bypass it, 
+  mandatory content regulations responsibilities for platform hosts,
+  and a pervasive surveillance network that monitors digital footprints, 
+    and subtly fabricating the psychological norms, 
+    shapes thought and molds behavior of the users.
 
-In this paper, we will talk about the technical aspects of the Wall, and briefly discusses the main strategies of circumventing it.
+In this paper, we will talk about the technical aspects of the Wall, 
+  and briefly discusses the main strategies of circumventing it.
 
 ## II. Operation of the GFW
 
@@ -45,9 +53,9 @@ to get a complete picture of the system.
 
 AS-es (autonomous systems) can be divided into internal and border AS-es 
   where border AS-es communicate to foreign AS-es. 
-Most of the filtering done by the GFW is done in the border AS-es <x>@ref03</x>
+Most of the filtering done by the GFW is done in the border AS-es <x>@03_whereFilter</x>
   where the request and response packets enter and leave the country,
-  some filtering done inside internal AS-es <x>@ref03</x> as well.
+  some filtering done inside internal AS-es <x>@03_whereFilter</x> as well.
 
 Majority of the filtering is done in border AS-es, as it is the main concern on
   the network layer. 
@@ -55,7 +63,7 @@ Majority of the filtering is done in border AS-es, as it is the main concern on
   through social engineering and state surveillance on hosting platforms and 
   the users, such as requiring content censors prior to publication 
   on all platforms, real-name registration of the users, and potentially legal
-  repercussions for those who post illicit content, etc. <x>@ref04</x>. 
+  repercussions for those who post illicit content, etc. <x>@04_digitalEco_mypaper</x>. 
   We would not cover these aspects in this paper.
 
 Having filtering done in internal AS-es is also likely an efficiency measure as 
@@ -67,7 +75,7 @@ An important note is that the GFW isn’t truly a wall in literal sense,
   as the paths to nodes in China might experience different levels of filtering,
   and the list of conditions for a packet to be censorable would change over time
   (e.g. the term "Tiananmen Square" would rise in censorship around the
-  anniversary of the 1989 protests in May and June) <x>@ref05</x>.
+  anniversary of the 1989 protests in May and June) <x>@05_conceptDoppler</x>.
 
 It is the case that the purpose of the GFW isn’t to create an impassable wall
  that prevents all foreign traffic, as it's technically infeasible and 
@@ -77,16 +85,16 @@ It is the case that the purpose of the GFW isn’t to create an impassable wall
 ### How Packets Are Monitored
 
 The packets in the internet traffic tracked by the GFW are monitored mainly with
-  routers in various AS-es that equipped with IDS technology <x>@ref03</x>, which
+  routers in various AS-es that equipped with IDS technology <x>@03_whereFilter</x>, which
   enables the routers to inspect incoming traffic using mechanisms to be discussed
   in the next sections.
 
 When a packet satisfies the conditions for censorship, the most common case for the
   GFW is to send a TCP RST packet to both ends to terminate the TCP connection on
-  both sides <x>@ref03</x>, triggering a denial-of-service attack prevent a pair
+  both sides <x>@03_whereFilter</x>, triggering a denial-of-service attack prevent a pair
   of endpoints from communicating. Despite this, researchers have found it is 
   possible to *ignore* the spoofed RST packet and still receive the responses
-  <x>@ref06</x>.
+  <x>@06_ignoring</x>.
 
 ```bash
 iptables -A INPUT -p tcp --tcp-flags RST RST -j DROP
@@ -138,7 +146,7 @@ Recent standards like HTTP/2 and QUIC would also make the GFW's job harder as
 ## III. IP Filtering
 
 IP filtering is the mechanism which has least operational cost and lowest level 
-of granularity. <x>@ref07</x> 
+of granularity. <x>@07_taxonomy</x> 
 If not administrated properly, 
 it would result in high false positive and false negative rates. Where:
 
@@ -187,14 +195,14 @@ In this sample entry of `/etc/hosts.deny` file, the rule is to block the IP addr
   that is trying to connect to the host. The rule is in shape of `daemon: client: options`
   where the daemon is the process name or wildcard that the client is trying to connect to,
   the client is the address, host name, 
-  or wildcard to represent the client attempting to connect. <x>@ref12</x>
+  or wildcard to represent the client attempting to connect. <x>@12_hostman</x>
 
 ![Figure 3-3: Destination-based Black Hole Filtering with Remote Triggering](res/3-3-cisco.png)
 
 ![Figure 3-4: Source-based Black Hole Filtering with Remote Triggering](res/3-4-cisco-source.png)
 
 On the BGP level, the routers are configured to drop the packets from matched
-  IP addresses, such black-holed IP addresses involves 3 steps: <x>@ref13</x> <x>@ref14</x>
+  IP addresses, such black-holed IP addresses involves 3 steps: <x>@13_blackhole_cisco</x> <x>@14_blackhole_rfc</x>
 - **Setup (preparation)**: A trigger is a special device that is installed at the NOC 
   (Network Operations Center) exclusively for the purpose of triggering a black hole. 
   The trigger must have an BGP peering relationship with all the edge routers, and is
@@ -213,8 +221,8 @@ On the BGP level, the routers are configured to drop the packets from matched
 The blacklist strategy is more common in the GFW, although whitelist strategy is 
   possible and has been used in the past, such that after 2009 Urumqi riots,
   internet access was blocked in Xinjiang in a way that only less than 100 
-  local sites, such as banks and local government sites were accessible. <x>@ref10</x>
-It lasted for nearly a year, <x>@ref11</x>
+  local sites, such as banks and local government sites were accessible. <x>@10_missingLink</x>
+It lasted for nearly a year, <x>@11_xinjiang</x>
   damages to the economy, society and people's social life were immense.
 
 
@@ -247,96 +255,130 @@ Time to live does cause some complications however as cached DNS records are reg
 
 The first way to bypass this mechanism is by avoiding DNS lookups in the first place. This can be done as the purpose of a DNS server to find the IP address of a host, but if you already know the IP address somehow then this can be completely bypassed. Another method to bypass this is to change the host name being used as similar to IP blocking the DNS poisoning cannot be done to a host name that hasn’t been recognized as needing to be poisoned. This is not very practical however as not many hosts would want to change their domain name and the new domain name can also just be added to the list to be poisoned again. Another similar method is to have a domain name that resolves to the true IP of another poisoned IP. This is more practical as the website being accessed doesn’t need to change its own name instead a path around the poisoning is being added. This is also not entirely practical as the new domain can be added to the poisoned list and the new domain needs to know the IP of the actual destination website which it would likely need to use DNS to learn. The main flaw of this approach is similar to IP blocking where what should ideally be blocked is a moving target as new hosts can be created and host names can be changed meaning that there will always be websites that the system doesn’t recognize as needing to be poisoned. 
 
----
 refs:
     
-    - id: ref01
-        title: The Internet Timeline of China 1986-2003
-        pubinfo: China Internet Network Information Center (CNNIC)
-        URL: https://web.archive.org/web/20240119091818/https://www.cnnic.com.cn/IDR/hlwfzdsj/201306/t20130628_40563.htm
-        accessed: 2024-01-19
-    
-    - id: ref02
-        title: The 50th Statistical Report on China's Internet Development
-        pubinfo: China Internet Network Information Center (CNNIC)
-        URL: https://web.archive.org/web/20231117230017/https://www.cnnic.com.cn/IDR/ReportDownloads/202212/P020230829504457839260.pdf
-        accessed: 2023-11-17
+```bib
+@online{01_hist1986,
+  title = "The Internet Timeline of China 1986-2003",
+  author = "China Internet Network Information Center (CNNIC)",
+  URL = "https://web.archive.org/web/20240119091818/https://www.cnnic.com.cn/IDR/hlwfzdsj/201306/t20130628_40563.htm",
+  date = {2012-06-28},
+  accessed = {2024-01-19}
+}
 
-    - id: ref03
-        title: Internet Censorship in China: Where Does the Filtering Occur?
-        author: Xu, X., Mao, Z. M., & Halderman, J. A.
-        pubinfo: Spring, N., Riley, G.F. (eds) Passive and Active Measurement. PAM 2011. Lecture Notes in Computer Science, vol 6579. Springer, Berlin, Heidelberg.
-        URL: https://doi.org/10.1007/978-3-642-19260-9_14
-        accessed: 2024-03-08
-    
-    - id: ref04
-        title: Analysis on China's Digital Ecosystem and its Implications for the Modern World
-        author: Jia, M., Vassileva, J.
-        pubinfo: (this is my paper for CMPT412)
-        accessed: 2024-03-08
-    
-    - id: ref05
-        title: ConceptDoppler, A Weather Tracker for Internet Censorship
-        author: Crandall, J. R., Zinn, D., Byrd, M., Barr, E. T., & East, R.
-        pubinfo: CCS. 2007 Oct 29;7:352-65.
-        URL: https://doi.org/10.1145/1315245.1315290
-        accessed: 2024-04-03
+@online{02_stat2022,
+  title = "The 50th Statistical Report on China's Internet Development",
+  author = "China Internet Network Information Center (CNNIC)",
+  date = {2022-12},
+  URL = "https://web.archive.org/web/20231117230017/https://www.cnnic.com.cn/IDR/ReportDownloads/202212/P020230829504457839260.pdf",
+  accessed = "2023-11"
+}
 
-    - id: ref06
-        title: Ignoring the Great Firewall of China
-        author: Clayton, R., Murdoch, S.J., Watson, R.N.M
-        pubinfo: Danezis, G., Golle, P. (eds) Privacy Enhancing Technologies. PET 2006. Lecture Notes in Computer Science, vol 4258. Springer, Berlin, Heidelberg. 
-        URL: https://doi.org/10.1007/11957454_2
-        accessed: 2024-04-01        
-    
-    - id: ref07
-        title: A Taxonomy of Internet Censorship and Anti-Censorship
-        author: Leberknight, Christopher S., et al.
-        pubinfo: Fifth International Conference on Fun with Algorithms (pp. 52-64).
-        URL: https://www.princeton.edu/~chiangm/anticensorship.pdf
-        accessed: 2024-04-01
+@InProceedings{03_whereFilter,
+  author="Xu, Xueyang
+  and Mao, Z. Morley
+  and Halderman, J. Alex",
+  editor="Spring, Neil
+  and Riley, George F.",
+  title="Internet Censorship in China: Where Does the Filtering Occur?",
+  booktitle="Passive and Active Measurement",
+  year="2011",
+  publisher="Springer Berlin Heidelberg",
+  address="Berlin, Heidelberg",
+  pages="133--142",
+  abstract="China filters Internet traffic in and out of the country. In order to circumvent the firewall, it is helpful to know where the filtering occurs. In this work, we explore the AS-level topology of China's network, and probe the firewall to find the locations of filtering devices. We find that even though most filtering occurs in border ASes, choke points also exist in many provincial networks. The result suggests that two major ISPs in China have different approaches placing filtering devices.",
+  isbn="978-3-642-19260-9",
+  URL="https://doi.org/10.1007/978-3-642-19260-9_14"
+}
 
-    - id: ref08
-        title: Poisoning the Well
-        author: Farnan, O., Darer, A., Wright, J.
-        pubinfo: Proceedings of the 2016 ACM on Workshop on Privacy in the Electronic Society - WPES'16. pp. 95–98. 
-        URL: https://doi.org/10.1145/2994620.2994636
-        accessed: 2024-04-01
+@report{04_digitalEco_mypaper,
+  title = "Analysis on China's Digital Ecosystem and its Implications for the Modern World",
+  author = "Jia, M., Vassileva, J.",
+  institution = "University of Saskatchewan",
+  type = "CMPT412 report",
+  date = "2023-12",
+  note = "This is my paper for CMPT412 (unpublished)"
+}
+    
+@article{05_conceptDoppler,
+  title={ConceptDoppler: a weather tracker for internet censorship.},
+  author={Crandall, Jedidiah R and Zinn, Daniel and Byrd, Michael and Barr, Earl T and East, Rich},
+  journal={CCS},
+  volume={7},
+  pages={352--365},
+  year={2007},
+  URL="https://doi.org/10.1145/1315245.1315290"
+}
 
-    - id: ref09
-        title: IT Security in the USA, Japan and China, A Study of Initiatives and Trends within.
-        author: Ahlgren, M., Breidne, M., Hektor, A.
-        accessed: 2024-04-01
+@inproceedings{06_ignoring,
+  title={Ignoring the great firewall of china},
+  author={Clayton, Richard and Murdoch, Steven J and Watson, Robert NM},
+  booktitle={International Workshop on Privacy Enhancing Technologies},
+  pages={20--35},
+  year={2006},
+  organization={Springer},
+  URL="https://doi.org/10.1007/11957454_2"
+}
     
-    - id: ref10
-        title: The Missing Link
-        author: Jia, Cui (2009 Nov.)
-        pubinfo: China Daily
-        accessed: 2024-04-03
-    
-    - id: ref11
-        title: Xinjiang Internet Restored Starting Today 
-        pubinfo: News.china.com.cn
-        URL: web.archive.org/web/20100517023849/http://news.china.com.cn/txt/2010-05/14/content_20038848.htm
-        accessed: 2024-04-03
-    
-    - id: ref12
-        title: hosts.den(5) - Linux Man Page
-        author: Wietse Venema
-        pubinfo: Free Software Foundation, Inc.
-        URL: https://linux.die.net/man/5/hosts.deny
+@inproceedings{07_taxonomy,
+  title={A taxonomy of Internet censorship and anti-censorship},
+  author={Leberknight, Christopher S and Chiang, Mung and Poor, Harold Vincent and Wong, Felix},
+  booktitle={Fifth International Conference on Fun with Algorithms},
+  pages={52--64},
+  year={2010},
+  URL="https://www.princeton.edu/~chiangm/anticensorship.pdf"
+}
 
-    - id: ref13
-        title: Remotely Triggered Black Hole Filtering - Destination-Based and Source-Based
-        author: Cisco Systems, Inc. (2005)
-        pubinfo: Cisco Systems, Inc.
-        URL: https://www.cisco.com/c/dam/en_us/about/security/intelligence/blackhole.pdf
-        accessed: 2024-04-03
-    
-    - id: ref14
-        title: RFC 5635 - Remote Triggered Black Hole filtering with uRPF
-        author: Kumari, W., et al. (2009)
-    
+
+@inproceedings{08_poisoning,
+  title={Poisoning the well: Exploring the great firewall's poisoned dns responses},
+  author={Farnan, Oliver and Darer, Alexander and Wright, Joss},
+  booktitle={Proceedings of the 2016 ACM on Workshop on Privacy in the Electronic Society},
+  pages={95--98},
+  year={2016},
+  URL="https://doi.org/10.1145/2994620.2994636"
+}
+
+@article{09_securityTrend,
+  title={IT Security in the USA, Japan and China},
+  author={Ahlgren, Martin and Breidne, Magnus and Hektor, A},
+  journal={A Study of Initiatives and Trends within},
+  year={2005},
+  publisher={Citeseer},
+  URL="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=dd87273d88927ca989937673e210a94a8186b6a4"
+}
 
     
----
+@article{10_missingLink,
+  title={The Missing Link},
+  author={Jia, Cui},
+  journal={China Daily},
+  year={2009},
+}
+    
+@online{11_xinjiang,
+  title={Xinjiang Internet Restored Starting Today},
+  URL="web.archive.org/web/20100517023849/http://news.china.com.cn/txt/2010-05/14/content_20038848.htm",
+  date={2010-05-14}
+}
+    
+@commentary{12_hostman,
+  title={hosts.den(5) - Linux},
+  author={Wietse Venema},
+  URL="https://linux.die.net/man/5/hosts.deny"
+}
+
+@manual{13_blackhole_cisco,
+  title={remotely triggered black hole filtering - Destination-Based and Source-Based},
+  author={Cisco Systems, Inc.},
+  organization={Cisco Systems, Inc.},
+  year={2005},
+  URL="https://www.cisco.com/c/dam/en_us/about/security/intelligence/blackhole.pdf"
+}
+    
+@standard{14_blackhole_rfc,
+  title={RFC 5635 - Remote Triggered Black Hole filtering with uRPF},
+  author={Kumari, W},
+  year={2009},
+}
+```
