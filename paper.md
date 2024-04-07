@@ -645,16 +645,100 @@ The adaptation of IPv6 would also make the GFW's job harder, as the IPv6 address
 Where conventional blocking criteria are based on protocol's header information,
   GFW evolves to use novel methods that inspect and analysis the payloads as well.
 
-With the funding of the state and political stressing from the government, 
-  the GFW has been able to keep up with the circumvention tools, and refined its
-  measurements to new emerging protocols. By a study in 2021 <x>@53_quicCensor</x>
-  to measure the blocking effectiveness on QUIC/HTTP3, 
-  researchers found that the GFW has higher failure rate on QUIC 
-  than the systems from Iran, India, Kazakhstan, it suggests that the GFW might
-  just blocked all QUIC traffic, suggesting that it does not yet has the 
-  capability to block selectively. Partially due to the QUIC's 
+When deemed that the cost of false negative for oversighting of information is 
+  more emergent issue than potential loss of false positives, but more are the
+  cases that different parties of a authoritarian government fails to coordinate
+  with each other. Such as Iran blocks all UDP traffic. <x>@53_quicBlock</x>
 
-Similarly, Iran blocked all UDP 
+Various advanced methods are applied with the SDN topology of the GFW, which
+  separates the concerns for high-efficiency relaying blocking (packet drop)
+  nodes (data panel), and mirrors the traffic to real-time traffic 
+  analysis nodes (control panel), those nodes then signal instructions to the 
+  data nodes to block the traffic or not. 
+
+However, various traffic analysis is only been found in the case where a node
+  relays the traffic 
+
+### Fingerprinting
+
+For some encrypted and obfuscated traffic, such as TOR, even the payload are not
+  easily readable, the traffic would still have side-channel vulnerabilities,
+  such as the fixed packet size, fixed packet interval, and entropy of the 
+  packets. <x>@50_tor_finger</x> <x>@56_gfwTOR</x> <x>@57_blockingTor</x>
+
+In particular, Tor (in 2012), has a TLS client `hello` in the Tor cipher list, 
+  with the purpose of initiate a TLS connection.
+
+```log
+c0 0a c0 14 00 39 00 38 c0 0f c0 05 00 35 c0 07
+c0 09 c0 11 c0 13 00 33 00 32 c0 0c c0 0e c0 02
+c0 04 00 04 00 05 00 2f c0 08 c0 12 00 16 00 13
+c0 0d c0 03 fe ff 00 0a 00 ff
+```
+**Listing 1.1.** Tor cipher list inside TLS client hello.
+
+It is one of the few unique features of Tor traffic that can be used to 
+  fingerprint the traffic, and the GFW uses this feature to locate Tor traffic.
+
+Fingerprinting is also the mechanisms where the routers recognizes anomalies
+  in the traffic pattern, <x>@26_gfwSS2020</x> once this is detected, probes 
+  will be send to server or the client for further attack gaining more data
+  to confirm the anomaly, and then block the traffic. (usually done in a
+  **replay attack**)
+
+### Active Probing and evolutions
+
+In case of Shadowsocks, the GFW uses an active probing mechanism to detect the
+  Shadowsocks traffic, and then block the source IP addresses of the VPS-es.
+
+The study in 2020 set up sets up series of experiments which attracts
+ the active probs from GFW.
+They studied the behaviors and fingerprinted certain traits
+ of probes sent by GFW, including IP origin, AS origin, and TTL values.
+
+Compares to similar study done in 2015 <x>@46_gfw-discover</x>, there are few
+  more traits that indicates the wall became stronger during the 5 years, in
+  terms of the active prober, which it is less likely to be recognized as a 
+  probe, and more likely to be recognized as a normal request.
+
+| Trait | 2015 | 2020 |
+|-------|------|------|
+| IP ID | no pattern | no pattern |
+| TTL | centered around 47-50 | centered around 46-50  |
+| TCP source ports | distribute across 16 bit space, including under 1024 | 90% around 32768-60999, none below 1024 |
+| TCP timestamp (from SYN) | 250 Hz - 1 kHz | 250 Hz - 1 kHz |
+| **Source IP** | **16464 probes with 15249 addresses** | **51837 probes with 12300 addresses** |
+| **replays** | **Little variation** | **systematic variation** |
+
+Noticibly, the two source IP has a very small overlap (167 out of 3500), suggesting
+  possible more dense probing nodes, or the GFW is gradually increasing the number
+  of probing nodes.
+
+Also, in terms of **replay attacks**, where nearly no variation is found in the 2015
+  study, the 2020 study found a systematic variation in the replay attacks, 
+  in ways that changing certain bits as a trait group for OutlineVPN and other
+  set of change for ShadowSocks and for Tor. Also, there is a noticeable **state-
+  transition** in which types of the replay attacks are used.
+
+The study also found that **packet length** as a fingerprinting trait to identify
+  ShadowSocks and other tunneling traffic, as well that a high-entropy payload
+  is more likely to gain attention, as a packets with a per-byte entropy of 7.2
+  is 4 times more likely to be probed compared to a packet with entropy of 3.0.
+
+By analyzing the behavior before and after an VPS is blocked by the
+ wall, there is a theory of machine-scanned registry of the VPS black-list (gray?)
+and human-administrated block-lists, and unblockings.
+
+An adversary model is proposed:
+
+1. GFW passively recognizes certain traffic pattern are likely to be 
+   circumvention tools,
+
+2. Probes are sent to the suspected VPS for confirmation, 
+   primiarly uses the Replay.
+
+3. The VPS are likely to be marked on *Black/Gray List*, 
+   and faced blocking by adminstrators at any future time.
 
 
 refs:
