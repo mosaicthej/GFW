@@ -1,0 +1,1761 @@
+%%
+%% This is file `sample-sigplan.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `sigplan')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigplan.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%% Commands for TeXCount
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%%
+%%
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[nonacm,sigplan,screen]{acmart}
+\usepackage{listings}
+%% NOTE that a single column version is required for 
+%% submission and peer review. This can be done by changing
+%% the \doucmentclass[...]{acmart} in this template to 
+%% \documentclass[manuscript,screen,review]{acmart}
+%% 
+%% To ensure 100% compatibility, please check the white list of
+%% approved LaTeX packages to be used with the Master Article Template at
+%% https://www.acm.org/publications/taps/whitelist-of-latex-packages 
+%% before creating your document. The white list page provides 
+%% information on how to submit additional LaTeX packages for 
+%% review and adoption.
+%% Fonts used in the template cannot be substituted; margin 
+%% adjustments are not allowed.
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+% \AtBeginDocument{%
+%   \providecommand\BibTeX{{%
+%     \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+% \setcopyright{acmlicensed}
+% \copyrightyear{2018}
+% \acmYear{2018}
+% \acmDOI{XXXXXXX.XXXXXXX}
+
+%% These commands are for a PROCEEDINGS abstract or paper.
+%\acmConference[Conference acronym 'XX]{Make sure to enter the correct
+%  conference title from your rights confirmation emai}{June 03--05,
+%  2018}{Woodstock, NY}
+%
+%  Uncomment \acmBooktitle if th title of the proceedings is different
+%  from ``Proceedings of ...''!
+%
+%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%  June 03--05, 2018, Woodstock, NY} 
+%\acmISBN{978-1-4503-XXXX-X/18/06}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+\setcopyright{none}
+%%
+%% end of the preamble, start of the body of the document source.
+\nocite{*}
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{The Great Firewall of China: A Technical Survey}
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+
+\author{Connor Tamme}
+\affiliation{%
+  \institution{University of Saskatchewan}
+  \city{Saskatoon}
+  \state{Saskatchewan}
+  \country{Canada}
+}
+\email{lrk311@usask.ca}
+
+
+\author{Mark Jia}
+\affiliation{%
+  \institution{University of Saskatchewan}
+  \city{Saskatoon}
+  \state{Saskatchewan}
+  \country{Canada}
+}
+\email{mij623@usask.ca}
+
+
+% \author{Ben Trovato}
+% \authornote{Both authors contributed equally to this research.}
+% \email{trovato@corporation.com}
+% \orcid{1234-5678-9012}
+% \author{G.K.M. Tobin}
+% \authornotemark[1]
+% \email{webmaster@marysville-ohio.com}
+% \affiliation{%
+%   \institution{Institute for Clarity in Documentation}
+%   \streetaddress{P.O. Box 1212}
+%   \city{Dublin}
+%   \state{Ohio}
+%   \country{USA}
+%   \postcode{43017-6221}
+% }
+
+% \author{Lars Th{\o}rv{\"a}ld}
+% \affiliation{%
+%   \institution{The Th{\o}rv{\"a}ld Group}
+%   \streetaddress{1 Th{\o}rv{\"a}ld Circle}
+%   \city{Hekla}
+%   \country{Iceland}}
+% \email{larst@affiliation.org}
+
+% \author{Valerie B\'eranger}
+% \affiliation{%
+%   \institution{Inria Paris-Rocquencourt}
+%   \city{Rocquencourt}
+%   \country{France}
+% }
+
+% \author{Aparna Patel}
+% \affiliation{%
+%  \institution{Rajiv Gandhi University}
+%  \streetaddress{Rono-Hills}
+%  \city{Doimukh}
+%  \state{Arunachal Pradesh}
+%  \country{India}}
+
+% \author{Huifen Chan}
+% \affiliation{%
+%   \institution{Tsinghua University}
+%   \streetaddress{30 Shuangqing Rd}
+%   \city{Haidian Qu}
+%   \state{Beijing Shi}
+%   \country{China}}
+
+% \author{Charles Palmer}
+% \affiliation{%
+%   \institution{Palmer Research Laboratories}
+%   \streetaddress{8600 Datapoint Drive}
+%   \city{San Antonio}
+%   \state{Texas}
+%   \country{USA}
+%   \postcode{78229}}
+% \email{cpalmer@prl.com}
+
+% \author{John Smith}
+% \affiliation{%
+%   \institution{The Th{\o}rv{\"a}ld Group}
+%   \streetaddress{1 Th{\o}rv{\"a}ld Circle}
+%   \city{Hekla}
+%   \country{Iceland}}
+% \email{jsmith@affiliation.org}
+
+% \author{Julius P. Kumquat}
+% \affiliation{%
+%   \institution{The Kumquat Consortium}
+%   \city{New York}
+%   \country{USA}}
+% \email{jpkumquat@consortium.net}
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Mark and Connor}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+The (Great Firewall) GFW of China is a national
+scale firewall created by the Chinese government for the purpose of
+controlling and censoring information on the internet. The network layer
+of GFW is implemented using IDS technology in filtering routers spread
+around the many AS-es in China. At these filtering routers packets are
+inspected using four main mechanisms: IP blocking, DNS poisoning,
+Keyword filtering and stateful traffic analysis. The focus of this paper
+is to examine the mechanisms in use by the GFW focusing on their
+implementation in network and transportation layer, looking at flaws and
+main strategies of circumventing the GFW.
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+% \begin{CCSXML}
+% <ccs2012>
+%  <concept>
+%   <concept_id>00000000.0000000.0000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>500</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>300</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>100</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>100</concept_significance>
+%  </concept>
+% </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc[300]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc[100]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+\keywords{GFW of China, IDS, IP blocking, DNS manipulation,
+URL filtering, Keyword filtering, RST packets, Circumvention}
+
+%% A "teaser" image appears between the author and affiliation
+%% information and the body of the document, and typically spans the
+%% page.
+% \begin{teaserfigure}
+%   \includegraphics[width=\columnwidth]{sampleteaser}
+%   \caption{Seattle Mariners at Spring Training, 2010.}
+%   \Description{Enjoying the baseball game from the third-base
+%   seats. Ichiro Suzuki preparing to bat.}
+%   \label{fig:teaser}
+% \end{teaserfigure}
+
+\received{7 April 2024}
+% \received[revised]{12 March 2009}
+% \received[accepted]{5 June 2009}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+\section{Introduction}
+\emph{Across the \textbf{Great Wall} can reach every corner in the
+world.} \cite{01_hist1986} This email message sent to Karlsruhe
+University of Germany, from Beijing in September 1987, marks China's
+entrance into the Internet. Ironically, as of December 2022, with 1.07
+billion Internet users domestically, \cite{02_stat2022} it would be
+nearly impossible to reach to anywhere on Internet without break across
+the GFW, the Great Firewall of China.
+
+The GFW comprises of intricate and multifaceted mechanisms, which ranges
+over technical, societal and political aspects. Beyond being a technical
+barrier, the Wall also includes legal ramifications for those attempting
+to bypass it, mandatory content regulations responsibilities for
+platform hosts, and a pervasive surveillance network that monitors
+digital footprints, and subtly fabricating the psychological norms,
+shapes thought and molds behavior of the users.
+
+In this paper, we will talk about the technical aspects of the Wall, and
+briefly discusses the main strategies of circumventing it.
+
+\hypertarget{-operation-of-the-gfw}{%
+\section{Operation of the GFW}\label{ii.-operation-of-the-gfw}}
+
+Before covering the mechanisms used by the GFW, it is worth briefly
+covering how and where the packet monitoring is done to get a complete
+picture of the system.
+
+
+\hypertarget{structure-of-the-gfw}{%
+\subsection{Structure of the GFW}\label{structure-of-the-gfw}}
+
+AS-es (autonomous systems) can be divided into internal and border AS-es
+where border AS-es communicate to foreign AS-es. Most of the filtering
+done by the GFW is done in the border AS-es \cite{03_whereFilter} where
+the request and response packets enter and leave the country, some
+filtering done inside internal AS-es \cite{03_whereFilter} as well.
+
+Majority of the filtering is done in border AS-es, as it is the main
+concern on the network layer. GFW's main work for domestic traffic is
+usually done in the application layer, through social engineering and
+state surveillance on hosting platforms and the users, such as requiring
+content censors prior to publication on all platforms, real-name
+registration of the users, and potentially legal repercussions for those
+who post illicit content, etc. \cite{04_digitalEco_mypaper}. We would
+not cover these aspects in this paper.
+
+Having filtering done in internal AS-es is also likely an efficiency
+measure as having everything done in border AS-es could bottleneck the
+network so mitigating some of the filtering into the interior AS-es can
+distribute the the load more evenly.
+
+An important note is that the GFW isn't truly a wall in literal sense,
+as the paths to nodes in China might experience different levels of
+filtering, and the list of conditions for a packet to be censorable
+would change over time (e.g.~the term ``Tiananmen Square'' would rise in
+censorship around the anniversary of the 1989 protests in May and June)
+\cite{05_conceptDoppler}.
+
+It is the case that the purpose of the GFW isn't to create an impassable
+wall that prevents all foreign traffic, as it's technically infeasible
+and economically destructive to do so, but more to instill fear and
+self-censorship and implicitly mold the online behavior with the sense
+of compliance.
+
+Flaws and opportunities for exploitation exist for each level of
+filtering, if exploiting these flaws would lead to eventual policy
+change due to the increasing cost of maintaining the GFW, or the
+increasing dissent from the citizens, or the increasing pressure from
+the international community; The circumvention tools would be the
+catalyst for the change. 07\_taxonomy
+
+\hypertarget{how-packets-are-monitored}{%
+\subsection{How Packets Are
+Monitored}\label{how-packets-are-monitored}}
+
+The packets in the internet traffic tracked by the GFW are monitored
+mainly with routers in various AS-es that equipped with IDS technology
+\cite{03_whereFilter}, which enables the routers to inspect incoming
+traffic using mechanisms to be discussed in the next sections.
+
+Great amount of effort was put in the SDN, software defined networking,
+which separated the control plane and the data plane in the routers,
+this enables the routers to be more flexible and adaptive to the
+changing conditions of the network, and to be able to update the
+filtering rules in real-time. \cite{15_SDN}
+
+When a packet satisfies the conditions for censorship, the most common
+case for the GFW is to send a TCP RST packet to both ends to terminate
+the TCP connection on both sides \cite{03_whereFilter}, triggering a
+denial-of-service attack prevent a pair of endpoints from communicating.
+Despite this, researchers have found it is possible to \emph{ignore} the
+spoofed RST packet and still receive the responses \cite{06_ignoring}.
+
+\begin{verbatim}
+iptables -A INPUT -p tcp --tcp-flags RST RST -j DROP
+# or using BSD's ipfw
+ipfw add 1000 drop tcp from any to me tcpflags rst in
+\end{verbatim}
+\href{}{2.1 commands that ignores all RST packets}
+
+\begin{verbatim}
+cam(55817) → china(http) [SYN]
+china(http) → cam(55817) [SYN, ACK] TTL=41
+cam(55817) → china(http) [ACK]
+cam(55817) → china(http) GET /?falun HTTP/1.0
+  <cr><lf><cr><lf>
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) [RST] TTL=49, seq=1
+china(http) → cam(55817) HTTP/1.1 200 OK 
+(text/html) <cr><lf> etc
+china(http) → cam(55817) . . . more of the web page
+cam(55817) → china(http) [ACK] seq=25, ack=2921
+china(http) → cam(55817) . . . more of the web page
+china(http) → cam(55817) [RST] TTL=49, seq=1461
+china(http) → cam(55817) [RST] TTL=49, seq=2921
+china(http) → cam(55817) [RST] TTL=49, seq=4381
+cam(55817) → china(http) [ACK] seq=25, ack=4381
+china(http) → cam(55817) [RST] TTL=49, seq=2921
+china(http) → cam(55817) . . . more of the web page
+china(http) → cam(55817) . . . more of the web page
+cam(55817) → china(http) [ACK] seq=25, ack=7301
+china(http) → cam(55817) [RST] TTL=49, seq=5841
+...
+\end{verbatim}
+\href{}{2.2 Example of ignoring RST packets}
+
+Note that the wall would also have the capability to track the ip
+addresses and the content of the packets, and potentially the users who
+initiates the communications.
+
+Also note that this experiment was done in 2006, and the GFW had its
+behavior since then, based on our experiment in 2024, the GFW would
+still send RST packets, but the most times, the rest of the content
+would be dropped.
+
+Recent standards like HTTP/2 and QUIC would also make the GFW's job
+harder as the encrypted and multiplexed nature of these transport layer
+protocols, the wall would use alternative strategies to track the
+packets, including deep packet inspection and stateful traffic analysis.
+The increased complexity increases chances of false negatives, yielding
+slightly lower blocking rates. We would discuss these findings in next
+sections.
+
+% ACM's consolidated article template, introduced in 2017, provides a
+% consistent \LaTeX\ style for use across ACM publications, and
+% incorporates accessibility and metadata-extraction functionality
+% necessary for future Digital Library endeavors. Numerous ACM and
+% SIG-specific \LaTeX\ templates have been examined, and their unique
+% features incorporated into this single new template.
+
+% If you are new to publishing with ACM, this document is a valuable
+% guide to the process of preparing your work for publication. If you
+% have published with ACM before, this document provides insight and
+% instruction into more recent changes to the article template.
+
+% The ``\verb|acmart|'' document class can be used to prepare articles
+% for any ACM publication --- conference or journal, and for any stage
+% of publication, from review to final ``camera-ready'' copy, to the
+% author's own version, with {\itshape very} few changes to the source.
+
+\hypertarget{iii.-ip-filtering}{%
+\section{III. IP Filtering}\label{iii.-ip-filtering}}
+
+IP filtering is the mechanism which has least operational cost and
+lowest level of granularity. \cite{07_taxonomy} If not administrated
+properly, it would result in high false positive and false negative
+rates. Where:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{False Positive}: Legitimate traffic is blocked. This mostly
+  happens to multiple sites are hosted on a shared IP address, when
+  blocking one site, all other sites on the same IP would be blocked
+  disregarding the content, causes unnecessary collateral damage,
+  including potential impact on the economy and innovation.
+\item
+  \textbf{False Negative}: Site that is deemed to be blocked is not
+  blocked, This mostly happens when the site is hosted on a dynamic IP
+  address, or the site is hosted on a CDN.
+\end{itemize}
+
+The IP Filtering is applied as first layer of defense, such as sites
+that have a fixed IP address such as google.com or US Senate.
+
+It is also applied to be a last resort, when other mechanisms fails to
+block the traffic, this is essentially the case to deal with the use of
+VPNs as a circumvention tool, in combination with active probing.
+
+\hypertarget{implementing-ip-blocking}{%
+\subsection{Implementing IP
+Blocking}\label{implementing-ip-blocking}}
+
+IP blocking, including other filtering mechanisms, is introducing
+\emph{black hole} in the network which drops the packets silently once
+the ip is recognized as a blacklisted ip.
+
+The routers would need a list of banned IP addresses, to adapt to the
+dynamic nature of the internet, the list would be updated periodically,
+and the routers would be able to update the list in real-time.
+
+One implementation is have a central database with entire list of banned
+IPs, and with the knowledge of complete network topology within the
+country, it would distribute the entries to routers in a way that both
+balances the load and ensures consistent filtering. The per-router
+distribution would also rotate the list to avoid bottleneck and
+synchronization issues.
+
+TCP wrapping is a common method to implement IP blocking, where the
+routers would have a list of rules to block the IP addresses, and the
+rules would be updated periodically. The rules would be in shape of
+files in \texttt{/etc/hosts.deny} and \texttt{/etc/hosts.allow} files,
+constituting a blacklist and whitelist respectively.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/3.1-etc-host.jpg}
+\caption{Figure 3-1: Format of rule used in /etc/host file.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/3.2-rule.png}
+\caption{Figure 3-2: An example rule to show how an IP could be banned.}
+\end{figure}
+
+In this sample entry of \texttt{/etc/hosts.deny} file, the rule is to
+block the IP address that is trying to connect to the host. The rule is
+in shape of \texttt{daemon:\ client:\ options} where the daemon is the
+process name or wildcard that the client is trying to connect to, the
+client is the address, host name, or wildcard to represent the client
+attempting to connect. \cite{12_hostman}
+
+The rule in figure 3-2 shows the block of IP 100.100.100.100. The rule
+states that all processes that the IP address tries to connect to should
+be denied, making TCP connection impossible to establish. Adding this
+rule to the \texttt{/etc/host.deny} file would IP block the address
+100.100.100.100 within the network
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/3-3-cisco.png}
+\caption{Figure 3-3: Destination-based Black Hole Filtering with Remote
+Triggering}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/3-4-cisco-source.png}
+\caption{Figure 3-4: Source-based Black Hole Filtering with Remote
+Triggering}
+\end{figure}
+
+On the BGP level, the routers are configured to drop the packets from
+matched IP addresses, such black-holed IP addresses involves 3 steps:
+\cite{13_blackhole_cisco} \cite{14_blackhole_rfc} - \textbf{Setup
+(preparation)}: A trigger is a special device that is installed at the
+NOC (Network Operations Center) exclusively for the purpose of
+triggering a black hole. The trigger must have an BGP peering
+relationship with all the edge routers, and is configured to
+redistribute static routes to its BGP peers, sends the static route by
+means of an BGP routing update.
+
+The Provider Edges (PEs) must have a static route for an unused IP
+address space. For example, 192.0.2.1/32 is set to Null0 (which is not
+used as a deployed IP address)
+
+Loose URPF (Unicast Reverse Path Forwarding) is configured on all
+external facing interfaces of PEs.
+
+\begin{itemize}
+\item
+  \textbf{Triggering}: When an administrator adds a static route to the
+  trigger, which redistributes the route by sending a BGP update to all
+  its BGP peers, setting the next hop to the target destination address
+  (192.0.2.1 in this case)
+
+  Each PE receives an BGP update and sets its next hop to the source IP
+  to the unused IP address space 192.0.2.1. The next hop to this address
+  is set to Null0 using a static routing entry in the router
+  configuration. The next hop entry in the FIB (Forwarding Information
+  Base) is updated to point to Null0.
+
+  All traffic from the source IP will fail the loose URPF check at the
+  PEs and as a consequence will be dropped.
+\item
+  \textbf{Withdrawal}: Once the trigger is in place, all traffic from
+  the source IP address will be dropped at the PEs. If it removed from
+  the black list, the administrator would manually remove the static
+  route from the triggering device, which sends a BGP route withdrawal
+  to its BGP peers. This prompts the edge routers to remove the existing
+  route for the source IP that points to 192.0.2.1 and to install a new
+  route in the FIB based on the IGP (Interior Gateway Protocol) RIB
+  (Routing Information Base) entry. If this new route is successful,
+  loose URPF will pass and traffic will be forwarded normally.
+\end{itemize}
+
+This implementation comes with 2 flavors of black hole filtering:
+Destination-Based and Source-Based. Above describes a source-based
+approach but the destination-based approach is similar, excepting the
+criteria for black hole a packet is the destination IP address.
+
+In a scenario of, when Alice, a university student, attempting to
+querying some blacklisted terms through a search engine somewhere
+outside the country. The GFW intercepts the query and may deemed that
+the search engine or the user should be punished. 16\_censorPerspectives
+
+When encountering the source-based black hole, all packets returned from
+the search engine would be dropped, and Alice would not be able to
+receive the search results. The search engine would not be aware of the
+black hole, and would continue to send the packets, which would be
+dropped at the border. Other sites hosted on the same IP address would
+also be blocked.
+
+When encountering the destination-based black hole, Alice's IP (since
+she is in the university network, the BGP would not recognize Alice's IP
+over the university's NAT, but take the university's IP address) would
+be black holed. All packets across BGP into that university would be
+dropped. All the sudden her entire dorm would not be able to connect to
+most of the sites hosted outside of the country, for a while until the
+administrator removes the ban. (Usually within a short period to avoid
+too much collateral damage)
+
+The later is often been regarded as a punitive measure, and shifts the
+blames of entire university's network inaccessibility to Alice for
+\emph{running into the wall}, and would be a warning to other students
+to avoid similar behavior. The practice of \emph{collective punishiment}
+is not uncommon in China since very ancient times to extend the legal
+actions beyond the individual, and thus strengthen the social control.
+\cite{17_earlyChina}
+
+The blacklist strategy is more common in the GFW, although whitelist
+strategy is possible and has been used in the past, such that after 2009
+Urumqi riots, internet access was blocked in Xinjiang in a way that only
+less than 100 local sites, such as banks and local government sites were
+accessible. \cite{10_missingLink} It lasted for nearly a year,
+\cite{11_xinjiang} damages to the economy, society and people's social
+life were immense.
+% \section{Template Overview}
+% As noted in the introduction, the ``\verb|acmart|'' document class can
+% be used to prepare many different kinds of documentation --- a
+% dual-anonymous initial submission of a full-length technical paper, a
+% two-page SIGGRAPH Emerging Technologies abstract, a ``camera-ready''
+% journal article, a SIGCHI Extended Abstract, and more --- all by
+% selecting the appropriate {\itshape template style} and {\itshape
+%   template parameters}.
+
+% This document will explain the major features of the document
+% class. For further information, the {\itshape \LaTeX\ User's Guide} is
+% available from
+% \url{https://www.acm.org/publications/proceedings-template}.
+
+\hypertarget{flaws-in-ip-blocking}{%
+\subsection{Flaws in IP Blocking}\label{flaws-in-ip-blocking}}
+
+In the case of IP blocking, the flaw would lies in their false-positive
+and false-negative rates, being effective and finale itself, certain
+oversites would defeat its purpose.
+
+Since the IP blocking is limited only to a specific IP address, the
+earliest circumventing attempts are proxied access, this does not
+necessarily mean using a VPN. Some early circumvention strategies
+features using a proxy over HTTP which is generally supported by most
+browsers and applications. \cite{18_GFWSpaceTime}
+
+Also, even for a single site, it is likely to host on CDN and the IP
+address would be dynamic, the GFW would have to update the list
+frequently to keep the site blocked. (Or, block the entire CDN, which
+the collateral damage would be substantial. As of 2023, many CDN are
+affected by the GFW. \cite{19_detect})
+
+Being the cheapest option on the list, it essentially is not scalable to
+block all the sites, to keep up with the dynamic nature of the internet,
+maintenance of such list would mean a large amount of human resources
+and technical overhead. Let alone of the indirect economic impacts.
+
+Tools with minimal configuration and cost would be enabled to bypass the
+IP blocking, and the GFW would have to rely on other mechanisms to keep
+up with the circumvention tools.
+
+The mechanism of over-blocking can be abused by groups or individuals to
+vandalize the network, such as compromising competitor's network via
+weaponizing censorship infrastructure, constitutes availibility attack;
+or to disrupt the network constantly that the cooperating parties would
+be annoyed, increase dissent and therefore defeat the purpose of the
+GFW. (Although the existence of GFW is self-defeating in the first
+place)
+
+
+\hypertarget{iv.-dns-manipulation}{%
+\section{IV. DNS Manipulation}\label{iv.-dns-manipulation}}
+
+Due to the majority of DNS request is over UDP, which tends to lack
+verification and encryption, DNS request are very vulnerable to
+hijacking and spoofing. \cite{20_dnsUDP}
+
+Part of the GFW is consisted of liar DNS servers and DNS hijackers
+returning incorrect IP addresses.
+
+At these server DNS, manipulation can be done where instead of returning
+the actual IP address for a result or relaying it to another DNS server,
+the servers would reply with either a non-functional IP address or with
+IP address of another website (e.g., leads to the site of local police
+department).
+
+Evidences suggests that the DNS filtering is keyword based
+\cite{21_dnsCompreh} , this would implicitly solve the problem of mirror
+url for the same content, and the DNS manipulation would be able to
+block the entire domain, including all subdomains and the content hosted
+on the domain.
+
+Because those domestic DNS servers are topologically and geographically
+closer to the users, the uses would be directed to the compromised
+addresses before the upstream can respond to the query.
+
+\hypertarget{Implementing DNS Manipulation}{
+\subsection{Implementing DNS Manipulation}\label{implementing DNS Manipulation}}
+
+Usually, DNS servers stores DNS records for recently accessed hosts in
+cache. If a record is in the cache, then the server would return the
+record directly as there is no need to query the record from the
+authoritative server again. \cite{22_dnsConcepts} Unless the record is
+expired, the server would query the upstream servers for the record of
+actual IP address. Most general DNS records are in the form of A and
+AAAA records, which stores IPv4 and IPv6 addresses respectively.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/4.1-DNS.png}
+\caption{Figure 4-1: An example of A and AAAA type records}
+\end{figure}
+
+DNS poisoning happens when the cache inside a server has been modified
+so that it returns the wrong IP address without validating the record
+with the authoritative server. This is a common attack vector for
+redirecting users to malicious sites, and the GFW uses this mechanism to
+block the access to certain sites.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{res/4.2-DNS-poisoned.png}
+\caption{Figure 4-2: An example of DNS cache poisoning}
+\end{figure}
+
+In example with the Figure 4-2, the DNS cache poisoning would be done by
+directly implanting fake DNS records into the cache of the DNS server.
+With the state-owned ISPs, DNS relay is compromised and the DNS records
+are all poisoned. Existing verification means such as using TTL on the
+DNS records are not effective, compares to a 3rd party DNS spoofing
+attack, where an individual attacker usually have temporary access to
+few servers; the affected DNS server, and all downstream and domestic
+servers are state-controlled. Conventional verification is futile.
+23\_dnsMeasure
+
+\hypertarget{flaws-of-dns-manipulation}{%
+\subsection{Flaws of DNS Manipulation}\label{flaws-of-dns-manipulation}}
+
+Avoiding the compromised DNS servers in first place would be the most
+effective way to bypass the DNS manipulation.
+
+For example, systems using systemd would be able to use
+\texttt{systemd-resolved} to edit \texttt{/etc/systemd/resolved.conf} to
+add entries that override the default DNS. This would allow the system
+to use a different DNS server that is trusted. Note that due to the
+recursive lookup feature, the DNS server need to ensure that all
+upstream are from clean sources too.
+
+Directly typing the IP addresses in browsers would also bypass DNS
+manipulation.
+
+Recent moves towards DNS over HTTPS (DoH) and DNS over TLS (DoT) would
+also make the DNS manipulation harder, as the DNS request and response
+would be encrypted and the upstream DNS server would be able to verify
+the authenticity of the DNS records.
+
+The problems still ensue as 1. The ISP can just deny providing the
+service to the user who uses DoH/DoT. 2. Opportunities of sidechannel
+attacks still exist to detect anomalies in the encrypted traffic.
+
+Note that the \emph{poison} in the tampered servers infers that, those
+compromises would have propagating effects due to the recursive nature
+of DNS lookups. In 2012, internet groups has found out that with 39
+AS-es in China injecting forged DNS replies, open resolvers outside
+China distributed in 109 countries, suffer some collateral damage from
+those forged replies, 3 TLDs affected almost completely (99.53\%,
+domains from within GFW, expected), and 11573 resolvers affected
+(26.4\%) or 1 out of 16 unexpected TLDs.
+(\texttt{de\ xn-\/-3e0b707e\ kr\ kp\ co\ travel\ pl\ no\ iq\ hk\ fi\ uk\ jp\ nz\ ca})
+As some paths between resolvers and some TLD (Top Level Domain) name
+servers transit through (affected) ISPs in China. 24\_dnsGlobal
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.8\textwidth]{res/4.3-de-poison.png}
+\caption{Figure 4-3: The Path where a .de TLD is poisoned}
+\end{figure*}
+
+Figure 4-3 shows a path where a \texttt{.de} TLD is poisoned, via its
+transit in CN (China) AS 7497 and AS 24151
+
+\hypertarget{v.-survey-of-circumvention-tools-and-strategies}{%
+\section{V. Survey of Circumvention Tools and
+Strategies}\label{v.-survey-of-circumvention-tools-and-strategies}}
+
+Various circumvention tools have been developed to bypass the GFW,
+gradually increasing in complexity, with trade-offs among dimensions of:
+\cite{07_taxonomy}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{Availability}: there is no use of an anti-censorship technology
+  if the target users cannot acces it.
+\item
+  \emph{User-friendliness}: an often under-explored dimension, given the
+  large population of users who are not technology-savvy.
+\item
+  \emph{Verifiability}: how can a user verify that the software is not a
+  monitoring tool from the government.
+\item
+  \emph{Scope}: how many modes of communication can be covered.
+\item
+  \emph{Security}: this is the most obvious dimension of an anti-censor.
+\item
+  \emph{Deniability}: if caught, how can a user deny her involvement.
+\item
+  \emph{Performance}: how much will throughput and delay be degraded by
+  using the anti-censor.
+\end{enumerate}
+
+Those aspects often has trade-offs against each other, e.g.,
+scope-deniability vs performance-availablity,
+userfriendliness-denialibilty.
+
+Just like the censorship system, the anti-censorship tools also comes in
+multiple components targeting different layers of the network stack that
+works together to bypass the censored network, most times corresponding
+to a specific censorship mechanism. e.g., secured alternative messaging
+application to ones raised security concerns (e.g., Signal, Telegram,
+etc), alternative DNS server for DNS manipulation, VPN or HTTP proxy for
+IP blocking, and encrypted tunnel for DPI and obfuscation for stateful
+traffic analysis. \cite{48_globalDefeat}
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{./res/5.1-anatomy.png}
+\caption{Figure 5-1: Anatomy of anti-censorship system}
+\end{figure*}
+
+Note that supporting the circumvention tools might involve out-of-band
+communication channels such as hidden part of CD/DVD, floppy disks, USB
+drives, or QR codes, URL and barcodes as printed materials, also
+includes word-of-mouth.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{./res/5.2-adoption.png}
+\caption{Figure 5-2: An interactive communication technology adoption
+channel}
+\end{figure}
+
+As figure 5-2 \cite{49_ICTAdopt} addressed the people's adoption of most
+ICTs, it is consisted on the spectrum from micro-individual to
+macro-social poles: with factors in aspects of \emph{system, technology,
+audience, social, use, adoption}
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{./res/5.3-circumventAdopt.png}
+\caption{Figure 5-3: A roadmap for understanding the use of
+circumvention tools}
+\end{figure}
+
+Similar pattern (figure 5-3) \cite{47_circumvention} would apply to
+circumvention tool use, with more weights on how each other factors
+would affect the usage, then usage would also have a reciprocal effect
+on the other factors.
+
+Noting that each of those factors are important in their own right, the
+scope of rest of this paper would focus on the technical aspects of the
+circumvention tools, and how they interact with the GFW.
+
+There are three commonly used circumvention methods that works together
+to bypass the GFW: \cite{07_taxonomy} - HTTP/CGI proxy - VPN (IP
+tunneling) - Re-routing - Distributed Hosting
+
+\hypertarget{httpcgi-proxy}{%
+\subsection{HTTP/CGI Proxy}\label{httpcgi-proxy}}
+
+HTTP proxying sends HTTP requests through an intermediate proxying
+server, the client would send exact same HTTP request to the proxy as if
+it is send to the target server. The proxy server may re-parse the HTTP
+request, and sends its own HTTP request to the target server, then
+returns the response back to the proxy client.
+
+CGI proxy, on the other hand, is a bit obfuscated, it uses a server-side
+script to perform proxying function. A CGI proxy client sends the
+requested URL as payload embedded in the data portion of an HTTP request
+to CGI server.
+
+The CGI server then pull out the intended target information from the
+payload, and sends the request to the target server, then returns the
+response back to the CGI client.
+
+Those are seen more primarily in the older systems, such as
+\emph{Freenet} (1999), \emph{UltraSurf} (2002), \emph{DynaWeb} (2002),
+which mainly uses HTTP proxy, and \emph{Psiphon} (2006) which uses CGI
+proxy.
+
+Each has its own issues such as limitations and dependencies on the
+client software, and it was designed when GFW was at its infancy, later
+added features (such as addition of DNS hijacking) would render these
+tools ineffective.
+
+The ideas of HTTP/CGI still leaves a legacy in more modern circumvention
+tools.
+
+\hypertarget{re-routing-and-distributed-hosting}{%
+\subsection{Re-routing and Distributed
+Hosting}\label{re-routing-and-distributed-hosting}}
+
+Re-routing systems route data through a \textbf{series} of proxying
+servers, encrypting the data again at each proxy, so that a given proxy
+knows at most either where the traffic came from or where it is going
+to, but not both.
+
+\emph{Tor} (2002) is the most famous and long-lived re-routing system,
+which routes the data through a series of volunteer-run nodes.
+
+However, \emph{Tor} is not a accessible in China since around 2015, it
+is lately known that TOR's obfuscation leaves a fingerprint that is
+possible to be detected. (e.g., fixed packet size, fixed packet
+interval, etc) Even it is hard to decipher the content of the packets,
+the fact that it is a TOR packet is enough for such traffic to be
+blocked. \cite{50_tor_finger} The SDN topology of the GFW has separate
+nodes that is each specialized at high-efficency relaying and traffic
+analysis. Similar to the remotely triggered black hole model, the
+analysing node triggers the blocking node to block the TOR traffic.
+
+Usability and QoS issues also makes the TOR less attractive to the
+general public, combined with social engineering and legal repercussions
+as deterrents, users are less likely to participate in the TOR network.
+
+On the other hand, the GFW is scaling up by with increasing control and
+higher computation power, with the decreasing number of participants in
+P2P networks, it is not surprising that the peers in such networks are
+likely to be state-controlled.
+
+Distributed hosting is more of a server effort than client effort, and
+usually for the purpose of mitigating DDoS and single-point-of-failure
+issues. It is effective against ip blocking.
+However, depending on the CDN, there are cases that entire CDN is
+blocked by the GFW, such as github was not blocked but had connection
+issues in China, as its CDN, \emph{Fastly}, was blocked.
+\cite{19_detect}
+
+At another case, CDNs might chose to practice geo-block due to
+economical pressures. In 2018 researchers found that many CDNs had
+server-side blocking with China, Iran, Syria, Sudan, Cuba, Russia and
+North Korea. \cite{51_CDN403}
+
+\hypertarget{tunneling}{%
+\subsection{Tunneling}\label{tunneling}}
+
+As of today, the most common circumvention tool is use of a VPN
+tunneling with self-hosted VPS or commercial shared VPN services.
+
+The user usually purchases a (virtual) machine in a place without
+censorship that can be accessed remotely, and installs tunneling
+software (e.g., openSSH, etc.) on the machine.
+
+For each session where the user needs to access uncensored content, the
+user would establish a SSH connection to the machine, and set up a SOCKS
+proxy on the client side, then redirect partial or all of the traffic
+through the tunnel to their VPS, then the VPS would relay the request
+and response between the client and the target server as a bridge.
+
+It is by far the most effective and secure way to bypass the GFW, since
+the VPS tends to be privately owned, and the traffic is encrypted
+end-to-end. Taking down one VPS would only affect the users on that VPS,
+but it is relatively cheap to switch to another VPS, compares to the
+increasing overhead of the GFW to block all the VPS-es.
+
+The only known way for the GFW to confronting it is to perform deep
+packet inspection and traffic analysis that recognizes the traffic
+pattern within the tunnel, and block the source IP address of the VPS.
+(we are excluding the social-engineering and legal repercussions in this
+paper)
+
+\textbf{Shadowsocks} (2012) is an open-sourced SOCKS protocols framework
+that is popular in China. It has many open-source forks in various
+languages \cite{36_SS-py} \cite{37_SS-rust} 38\_SS-go 39\_SS-cs.\\
+According to a research survey in July 2015, of 371 faculty members and
+students from Tsinghua Univer-sity, 21\% used Shadowsocks to bypass
+censorship in China. \cite{52_googleScholar}
+
+The popularity of Shadowsocks stems from its simplicity. Its lightweight
+design imposes minimal overhead on proxied traffic and makes it easy to
+implement on a variety of platforms. A large, profit-incentivized proxy
+reseller market, as well as numerous tutorials and one-click
+installation scripts, have reduced the difficulty of installing and
+using Shadowsocks, and made it popular even among non-technical users.
+
+Researchers found that the GFW utilizes an \emph{active probing}
+mechanism to detect the Shadowsocks traffic, and then block the source
+IP addresses of the VPS-es. \cite{30_SSActiveProb} Still, the blocks are only
+anecdotally reported, and continuing development of Shadowsocks to
+improve its encryption and obfuscation with community efforts.
+
+\hypertarget{novel-protocols}{%
+\subsection{Novel Protocols}\label{novel-protocols}}
+
+Recent developments and adoption of novel protocols such as QUIC, HTTP/3
+and IPv6 would also make the GFW's job harder, as the multiplexed and
+encrypted nature in the transport and network layer make it harder to
+track traffic states, also increases the problem space exponentially for
+rule-based filtering.
+
+\hypertarget{quichttp3}{%
+\paragraph{QUIC+HTTP/3}\label{quichttp3}}
+
+\textbf{QUIC} (Quick UDP Internet Connections) is a transport layer
+protocol was designed to provide secure, consistent, and low-latency
+connections over the internet. A secure connection resembling DTLS
+(Datagram Transport Layer Security) is running atop UDP and multiplexes
+multiple streams over the same connection.
+\textless x\textless\textgreater{}@54\_QUIC
+
+\textbf{HTTP/3} is the 3rd major version of HTTP used to exchange
+information on the WWW. HTTP/3 is based on QUIC, and is designed to
+improve the performance of the web, especially for mobile devices.
+\cite{55_HTTP3}
+
+The introduction of HTTP/3 (HTTP over QUIC) yields promising
+expectations to counteract such interference, due to its novelty,
+build-in encryption, and faster connection establishment. QUIC's methods
+of IP address discovery should also make it harder to spoof.
+
+Researchers in 2020 conducted a study on the effectiveness of the GFW to
+block QUIC traffic, found that for AS-es which has high failure rate on
+TCP connections (TCP-handshake timeout and connection reset), yields a
+significantly lower failure rate on QUIC connections.
+\cite{53_quicCensor}
+
+The same research also suggests that IP blocking is the primary
+causation of the failing QUIC connections. Since the censor does not
+exclusively apply IP endpoint blocking, hosts that are targeted by a
+different form of HTTPS censorship are still available over QUIC.
+
+The adaptation of IPv6 would also make the GFW's job harder, as the IPv6
+address space is significantly larger than IPv4, and the GFW would have
+higher operational overhead to keep adding more entries in the
+blacklist, and also meant easier allocation for individual users to have
+their more VPSs in the IPv6 space.
+
+\hypertarget{vi.-keyword-filtering-deep-packet-inspection-stateful-traffic-analysis-and-evolution-of-gfw}{%
+\section{VI. Keyword Filtering, Deep Packet Inspection Stateful
+Traffic Analysis and Evolution of
+GFW}\label{vi.-keyword-filtering-deep-packet-inspection-stateful-traffic-analysis-and-evolution-of-gfw}}
+
+Where conventional blocking criteria are based on protocol's header
+information, GFW evolves to use novel methods that inspect and analysis
+the payloads as well.
+
+When deemed that the cost of false negative for oversighting of
+information is more emergent issue than potential loss of false
+positives, but more are the cases that different parties of a
+authoritarian government fails to coordinate with each other. Such as
+Iran blocks all UDP traffic. \cite{53_quicCensor}
+
+Various advanced methods are applied with the SDN topology of the GFW,
+which separates the concerns for high-efficiency relaying blocking
+(packet drop) nodes (data panel), and mirrors the traffic to real-time
+traffic analysis nodes (control panel), those nodes then signal
+instructions to the data nodes to block the traffic or not.
+
+However, various traffic analysis is only been found in the case where a
+node relays the traffic
+
+\hypertarget{fingerprinting}{%
+\subsection{Fingerprinting}\label{fingerprinting}}
+
+For some encrypted and obfuscated traffic, such as TOR, even the payload
+are not easily readable, the traffic would still have side-channel
+vulnerabilities, such as the fixed packet size, fixed packet interval,
+and entropy of the packets. \cite{50_tor_finger} \cite{56_gfwTOR}
+\cite{57_blockingTor}
+
+In particular, Tor (in 2012), has a TLS client \texttt{hello} in the Tor
+cipher list, with the purpose of initiate a TLS connection.\\
+\hline
+\begin{verbatim}
+c0 0a c0 14 00 39 00 38 c0 0f c0 05 00 35 c0 07
+c0 09 c0 11 c0 13 00 33 00 32 c0 0c c0 0e c0 02
+c0 04 00 04 00 05 00 2f c0 08 c0 12 00 16 00 13
+c0 0d c0 03 fe ff 00 0a 00 ff
+\end{verbatim}\textbf{Listing 1.1.} Tor cipher list inside TLS client hello.
+\\
+\\
+It is one of the few unique features of Tor traffic that can be used to
+fingerprint the traffic, and the GFW uses this feature to locate Tor
+traffic.
+
+Fingerprinting is also the mechanisms where the routers recognizes
+anomalies in the traffic pattern, \cite{26_gfwSS2020} once this is
+detected, probes will be send to server or the client for further attack
+gaining more data to confirm the anomaly, and then block the traffic.
+(usually done in a \textbf{replay attack})
+
+\hypertarget{active-probing-and-evolutions}{%
+\subsection{Active Probing and
+evolutions}\label{active-probing-and-evolutions}}
+
+In case of Shadowsocks, the GFW uses an active probing mechanism to
+detect the Shadowsocks traffic, and then block the source IP addresses
+of the VPS-es.
+
+The study in 2020 set up sets up series of experiments which attracts
+the active probs from GFW. They studied the behaviors and fingerprinted
+certain traits of probes sent by GFW, including IP origin, AS origin,
+and TTL values.
+
+Compares to similar study done in 2015 \cite{46_gfw-discover}, there are
+few more traits that indicates the wall became stronger during the 5
+years, in terms of the active prober, which it is less likely to be
+recognized as a probe, and more likely to be recognized as a normal
+request.
+
+\begin{table*}[ht]
+    \begin{tabular}{ | l | l | l | c | }
+        \hline
+        \textbf{Trait} & \textbf{2015} & \textbf{2020} \\ \hline
+        IP ID & no pattern & no pattern \\\hline
+        TTL & Centered around 47-50 & Centered around 46-50 \\\hline
+        TCP source ports & Distribute across 16 bit space, including under 1024 & 90\% around 32768-60999, none below 1024 \\\hline
+        TCP timestamp (from SYN) & 250 Hz - 1 kHz & 250 Hz - 1 kHz \\\hline
+        \textbf{Source IP} & \textbf{16464 probes with 15249 addresses} & \textbf{51837 probes with 12300 addresses} \\\hline
+        \textbf{replays} & \textbf{little variation} & \textbf{systematic variation} \\ \hline
+    \end{tabular}
+    \caption{Comparison of GFW's probes' traits between 2015 and 2020}
+    \label{tab:my_label}
+\end{table*}
+
+% \begin{longtable}[]{@{}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3684}}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3158}}
+%   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3158}}@{}}
+% \toprule()
+% \begin{minipage}[b]{\linewidth}\raggedright
+% Trait
+% \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+% 2015
+% \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+% 2020
+% \end{minipage} \\
+% \midrule()
+% \endhead
+% IP ID & no pattern & no pattern \\
+% TTL & centered around 47-50 & centered around 46-50 \\
+% TCP source ports & distribute across 16 bit space, including under 1024
+% & 90\% around 32768-60999, none below 1024 \\
+% TCP timestamp (from SYN) & 250 Hz - 1 kHz & 250 Hz - 1 kHz \\
+% \textbf{Source IP} & \textbf{16464 probes with 15249 addresses} &
+% \textbf{51837 probes with 12300 addresses} \\
+% \textbf{replays} & \textbf{Little variation} & \textbf{systematic
+% variation} \\
+% \bottomrule()
+% \end{longtable}
+
+Noticibly, the two source IP has a very small overlap (167 out of 3500),
+suggesting possible more dense probing nodes, or the GFW is gradually
+increasing the number of probing nodes.
+
+Also, in terms of \textbf{replay attacks}, where nearly no variation is
+found in the 2015 study, the 2020 study found a systematic variation in
+the replay attacks, in ways that changing certain bits as a trait group
+for OutlineVPN and other set of change for ShadowSocks and for Tor.
+Also, there is a noticeable \textbf{state- transition} in which types of
+the replay attacks are used.
+
+The study also found that \textbf{packet length} as a fingerprinting
+trait to identify ShadowSocks and other tunneling traffic, as well that
+a high-entropy payload is more likely to gain attention, as a packets
+with a per-byte entropy of 7.2 is 4 times more likely to be probed
+compared to a packet with entropy of 3.0.
+
+By analyzing the behavior before and after an VPS is blocked by the
+wall, there is a theory of machine-scanned registry of the VPS
+black-list (gray?) and human-administrated block-lists, and unblockings.
+
+An adversary model is proposed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  GFW passively recognizes certain traffic pattern are likely to be
+  circumvention tools,
+\item
+  Probes are sent to the suspected VPS for confirmation, primiarly uses
+  the Replay.
+\item
+  The VPS are likely to be marked on \emph{Black/Gray List}, and faced
+  blocking by adminstrators at any future time.
+\end{enumerate}
+
+\hypertarget{social-engineering}{%
+\subsubsection{Social Engineering}\label{social-engineering}}
+
+While in the attempt of demystifying the GFW, we might be
+underestimating or overestimating the technical capabilities of GFW, it
+is entirely feasible that the deep-learning based traffic analysis is
+just a rumor, as the GFW tends to rely on the state-controlled violence
+and social engineering to achieve the same goal.
+
+Around the same time where the developer and maintainer posted the
+possible solutions to redirect the replay attacks to other http sites,
+and improving the cipher being used, and ready to deploy the new version
+of the Shadowsocks, the state police found the maintainer and the repo
+was \emph{voluntarily} deleted by the maintainer,
+\emph{clowwindy@GitHub}. \cite{58_breakwaIssue}
+
+Again, as many would argue, the GFW is not a technical problem, but a
+social problem, and the social engineering is the most effective way to
+defeat the GFW, as the GFW is not a monolithic entity, but a collection
+of individuals with different goals and motivations.
+
+
+% \subsection{Template Styles}
+
+% The primary parameter given to the ``\verb|acmart|'' document class is
+% the {\itshape template style} which corresponds to the kind of publication
+% or SIG publishing the work. This parameter is enclosed in square
+% brackets and is a part of the {\verb|documentclass|} command:
+% \begin{verbatim}
+%   \documentclass[STYLE]{acmart}
+% \end{verbatim}
+
+% Journals use one of three template styles. All but three ACM journals
+% use the {\verb|acmsmall|} template style:
+% \begin{itemize}
+% \item {\verb|acmsmall|}: The default journal template style.
+% \item {\verb|acmlarge|}: Used by JOCCH and TAP.
+% \item {\verb|acmtog|}: Used by TOG.
+% \end{itemize}
+
+% The majority of conference proceedings documentation will use the {\verb|acmconf|} template style.
+% \begin{itemize}
+% \item {\verb|acmconf|}: The default proceedings template style.
+% \item{\verb|sigchi|}: Used for SIGCHI conference articles.
+% \item{\verb|sigchi-a|}: Used for SIGCHI ``Extended Abstract'' articles.
+% \item{\verb|sigplan|}: Used for SIGPLAN conference articles.
+% \end{itemize}
+
+% \subsection{Template Parameters}
+
+% In addition to specifying the {\itshape template style} to be used in
+% formatting your work, there are a number of {\itshape template parameters}
+% which modify some part of the applied template style. A complete list
+% of these parameters can be found in the {\itshape \LaTeX\ User's Guide.}
+
+% Frequently-used parameters, or combinations of parameters, include:
+% \begin{itemize}
+% \item {\verb|anonymous,review|}: Suitable for a ``dual-anonymous''
+%   conference submission. Anonymizes the work and includes line
+%   numbers. Use with the \verb|\acmSubmissionID| command to print the
+%   submission's unique ID on each page of the work.
+% \item{\verb|authorversion|}: Produces a version of the work suitable
+%   for posting by the author.
+% \item{\verb|screen|}: Produces colored hyperlinks.
+% \end{itemize}
+
+% This document uses the following string as the first command in the
+% source file:
+% \begin{verbatim}
+% \documentclass[sigplan,screen]{acmart}
+% \end{verbatim}
+
+% \section{Modifications}
+
+% Modifying the template --- including but not limited to: adjusting
+% margins, typeface sizes, line spacing, paragraph and list definitions,
+% and the use of the \verb|\vspace| command to manually adjust the
+% vertical spacing between elements of your work --- is not allowed.
+
+% {\bfseries Your document will be returned to you for revision if
+%   modifications are discovered.}
+
+% \section{Typefaces}
+
+% The ``\verb|acmart|'' document class requires the use of the
+% ``Libertine'' typeface family. Your \TeX\ installation should include
+% this set of packages. Please do not substitute other typefaces. The
+% ``\verb|lmodern|'' and ``\verb|ltimes|'' packages should not be used,
+% as they will override the built-in typeface families.
+
+% \section{Title Information}
+
+% The title of your work should use capital letters appropriately -
+% \url{https://capitalizemytitle.com/} has useful rules for
+% capitalization. Use the {\verb|title|} command to define the title of
+% your work. If your work has a subtitle, define it with the
+% {\verb|subtitle|} command.  Do not insert line breaks in your title.
+
+% If your title is lengthy, you must define a short version to be used
+% in the page headers, to prevent overlapping text. The \verb|title|
+% command has a ``short title'' parameter:
+% \begin{verbatim}
+%   \title[short title]{full title}
+% \end{verbatim}
+
+% \section{Authors and Affiliations}
+
+% Each author must be defined separately for accurate metadata
+% identification. Multiple authors may share one affiliation. Authors'
+% names should not be abbreviated; use full first names wherever
+% possible. Include authors' e-mail addresses whenever possible.
+
+% Grouping authors' names or e-mail addresses, or providing an ``e-mail
+% alias,'' as shown below, is not acceptable:
+% \begin{verbatim}
+%   \author{Brooke Aster, David Mehldau}
+%   \email{dave,judy,steve@university.edu}
+%   \email{firstname.lastname@phillips.org}
+% \end{verbatim}
+
+% The \verb|authornote| and \verb|authornotemark| commands allow a note
+% to apply to multiple authors --- for example, if the first two authors
+% of an article contributed equally to the work.
+
+% If your author list is lengthy, you must define a shortened version of
+% the list of authors to be used in the page headers, to prevent
+% overlapping text. The following command should be placed just after
+% the last \verb|\author{}| definition:
+% \begin{verbatim}
+%   \renewcommand{\shortauthors}{McCartney, et al.}
+% \end{verbatim}
+% Omitting this command will force the use of a concatenated list of all
+% of the authors' names, which may result in overlapping text in the
+% page headers.
+
+% The article template's documentation, available at
+% \url{https://www.acm.org/publications/proceedings-template}, has a
+% complete explanation of these commands and tips for their effective
+% use.
+
+% Note that authors' addresses are mandatory for journal articles.
+
+% \section{Rights Information}
+
+% Authors of any work published by ACM will need to complete a rights
+% form. Depending on the kind of work, and the rights management choice
+% made by the author, this may be copyright transfer, permission,
+% license, or an OA (open access) agreement.
+
+% Regardless of the rights management choice, the author will receive a
+% copy of the completed rights form once it has been submitted. This
+% form contains \LaTeX\ commands that must be copied into the source
+% document. When the document source is compiled, these commands and
+% their parameters add formatted text to several areas of the final
+% document:
+% \begin{itemize}
+% \item the ``ACM Reference Format'' text on the first page.
+% \item the ``rights management'' text on the first page.
+% \item the conference information in the page header(s).
+% \end{itemize}
+
+% Rights information is unique to the work; if you are preparing several
+% works for an event, make sure to use the correct set of commands with
+% each of the works.
+
+% The ACM Reference Format text is required for all articles over one
+% page in length, and is optional for one-page articles (abstracts).
+
+% \section{CCS Concepts and User-Defined Keywords}
+
+% Two elements of the ``acmart'' document class provide powerful
+% taxonomic tools for you to help readers find your work in an online
+% search.
+
+% The ACM Computing Classification System ---
+% \url{https://www.acm.org/publications/class-2012} --- is a set of
+% classifiers and concepts that describe the computing
+% discipline. Authors can select entries from this classification
+% system, via \url{https://dl.acm.org/ccs/ccs.cfm}, and generate the
+% commands to be included in the \LaTeX\ source.
+
+% User-defined keywords are a comma-separated list of words and phrases
+% of the authors' choosing, providing a more flexible way of describing
+% the research being presented.
+
+% CCS concepts and user-defined keywords are required for for all
+% articles over two pages in length, and are optional for one- and
+% two-page articles (or abstracts).
+
+% \section{Sectioning Commands}
+
+% Your work should use standard \LaTeX\ sectioning commands:
+% \verb|section|, \verb|subsection|, \verb|subsubsection|, and
+% \verb|paragraph|. They should be numbered; do not remove the numbering
+% from the commands.
+
+% Simulating a sectioning command by setting the first word or words of
+% a paragraph in boldface or italicized text is {\bfseries not allowed.}
+
+% \section{Tables}
+
+% The ``\verb|acmart|'' document class includes the ``\verb|booktabs|''
+% package --- \url{https://ctan.org/pkg/booktabs} --- for preparing
+% high-quality tables.
+
+% Table captions are placed {\itshape above} the table.
+
+% Because tables cannot be split across pages, the best placement for
+% them is typically the top of the page nearest their initial cite.  To
+% ensure this proper ``floating'' placement of tables, use the
+% environment \textbf{table} to enclose the table's contents and the
+% table caption.  The contents of the table itself must go in the
+% \textbf{tabular} environment, to be aligned properly in rows and
+% columns, with the desired horizontal and vertical rules.  Again,
+% detailed instructions on \textbf{tabular} material are found in the
+% \textit{\LaTeX\ User's Guide}.
+
+% Immediately following this sentence is the point at which
+% Table~\ref{tab:freq} is included in the input file; compare the
+% placement of the table here with the table in the printed output of
+% this document.
+
+% \begin{table}
+%   \caption{Frequency of Special Characters}
+%   \label{tab:freq}
+%   \begin{tabular}{ccl}
+%     \toprule
+%     Non-English or Math&Frequency&Comments\\
+%     \midrule
+%     \O & 1 in 1,000& For Swedish names\\
+%     $\pi$ & 1 in 5& Common in math\\
+%     \$ & 4 in 5 & Used in business\\
+%     $\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
+%   \bottomrule
+% \end{tabular}
+% \end{table}
+
+% To set a wider table, which takes up the whole width of the page's
+% live area, use the environment \textbf{table*} to enclose the table's
+% contents and the table caption.  As with a single-column table, this
+% wide table will ``float'' to a location deemed more
+% desirable. Immediately following this sentence is the point at which
+% Table~\ref{tab:commands} is included in the input file; again, it is
+% instructive to compare the placement of the table here with the table
+% in the printed output of this document.
+
+% \begin{table*}
+%   \caption{Some Typical Commands}
+%   \label{tab:commands}
+%   \begin{tabular}{ccl}
+%     \toprule
+%     Command &A Number & Comments\\
+%     \midrule
+%     \texttt{{\char'134}author} & 100& Author \\
+%     \texttt{{\char'134}table}& 300 & For tables\\
+%     \texttt{{\char'134}table*}& 400& For wider tables\\
+%     \bottomrule
+%   \end{tabular}
+% \end{table*}
+
+% Always use midrule to separate table header rows from data rows, and
+% use it only for this purpose. This enables assistive technologies to
+% recognise table headers and support their users in navigating tables
+% more easily.
+
+% \section{Math Equations}
+% You may want to display math equations in three distinct styles:
+% inline, numbered or non-numbered display.  Each of the three are
+% discussed in the next sections.
+
+% \subsection{Inline (In-text) Equations}
+% A formula that appears in the running text is called an inline or
+% in-text formula.  It is produced by the \textbf{math} environment,
+% which can be invoked with the usual
+% \texttt{{\char'134}begin\,\ldots{\char'134}end} construction or with
+% the short form \texttt{\$\,\ldots\$}. You can use any of the symbols
+% and structures, from $\alpha$ to $\omega$, available in
+% \LaTeX~\cite{Lamport:LaTeX}; this section will simply show a few
+% examples of in-text equations in context. Notice how this equation:
+% \begin{math}
+%   \lim_{n\rightarrow \infty}x=0
+% \end{math},
+% set here in in-line math style, looks slightly different when
+% set in display style.  (See next section).
+
+% \subsection{Display Equations}
+% A numbered display equation---one set off by vertical space from the
+% text and centered horizontally---is produced by the \textbf{equation}
+% environment. An unnumbered display equation is produced by the
+% \textbf{displaymath} environment.
+
+% Again, in either environment, you can use any of the symbols and
+% structures available in \LaTeX\@; this section will just give a couple
+% of examples of display equations in context.  First, consider the
+% equation, shown as an inline equation above:
+% \begin{equation}
+%   \lim_{n\rightarrow \infty}x=0
+% \end{equation}
+% Notice how it is formatted somewhat differently in
+% the \textbf{displaymath}
+% environment.  Now, we'll enter an unnumbered equation:
+% \begin{displaymath}
+%   \sum_{i=0}^{\infty} x + 1
+% \end{displaymath}
+% and follow it with another numbered equation:
+% \begin{equation}
+%   \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
+% \end{equation}
+% just to demonstrate \LaTeX's able handling of numbering.
+
+% \section{Figures}
+
+% The ``\verb|figure|'' environment should be used for figures. One or
+% more images can be placed within a figure. If your figure contains
+% third-party material, you must clearly identify it as such, as shown
+% in the example below.
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=\linewidth]{sample-franklin}
+%   \caption{1907 Franklin Model D roadster. Photograph by Harris \&
+%     Ewing, Inc. [Public domain], via Wikimedia
+%     Commons. (\url{https://goo.gl/VLCRBB}).}
+%   \Description{A woman and a girl in white dresses sit in an open car.}
+% \end{figure}
+
+% Your figures should contain a caption which describes the figure to
+% the reader.
+
+% Figure captions are placed {\itshape below} the figure.
+
+% Every figure should also have a figure description unless it is purely
+% decorative. These descriptions convey what’s in the image to someone
+% who cannot see it. They are also used by search engine crawlers for
+% indexing images, and when images cannot be loaded.
+
+% A figure description must be unformatted plain text less than 2000
+% characters long (including spaces).  {\bfseries Figure descriptions
+%   should not repeat the figure caption – their purpose is to capture
+%   important information that is not already provided in the caption or
+%   the main text of the paper.} For figures that convey important and
+% complex new information, a short text description may not be
+% adequate. More complex alternative descriptions can be placed in an
+% appendix and referenced in a short figure description. For example,
+% provide a data table capturing the information in a bar chart, or a
+% structured list representing a graph.  For additional information
+% regarding how best to write figure descriptions and why doing this is
+% so important, please see
+% \url{https://www.acm.org/publications/taps/describing-figures/}.
+
+% \subsection{The ``Teaser Figure''}
+
+% A ``teaser figure'' is an image, or set of images in one figure, that
+% are placed after all author and affiliation information, and before
+% the body of the article, spanning the page. If you wish to have such a
+% figure in your article, place the command immediately before the
+% \verb|\maketitle| command:
+% \begin{verbatim}
+%   \begin{teaserfigure}
+%     \includegraphics[width=\columnwidth]{sampleteaser}
+%     \caption{figure caption}
+%     \Description{figure description}
+%   \end{teaserfigure}
+% \end{verbatim}
+
+% \section{Citations and Bibliographies}
+
+% The use of \BibTeX\ for the preparation and formatting of one's
+% references is strongly recommended. Authors' names should be complete
+% --- use full first names (``Donald E. Knuth'') not initials
+% (``D. E. Knuth'') --- and the salient identifying features of a
+% reference should be included: title, year, volume, number, pages,
+% article DOI, etc.
+
+% The bibliography is included in your source document with these two
+% commands, placed just before the \verb|\end{document}| command:
+% \begin{verbatim}
+%   \bibliographystyle{ACM-Reference-Format}
+%   \bibliography{bibfile}
+% \end{verbatim}
+% where ``\verb|bibfile|'' is the name, without the ``\verb|.bib|''
+% suffix, of the \BibTeX\ file.
+
+% Citations and references are numbered by default. A small number of
+% ACM publications have citations and references formatted in the
+% ``author year'' style; for these exceptions, please include this
+% command in the {\bfseries preamble} (before the command
+% ``\verb|\begin{document}|'') of your \LaTeX\ source:
+% \begin{verbatim}
+%   \citestyle{acmauthoryear}
+% \end{verbatim}
+
+%   Some examples.  A paginated journal article \cite{Abril07}, an
+%   enumerated journal article \cite{Cohen07}, a reference to an entire
+%   issue \cite{JCohen96}, a monograph (whole book) \cite{Kosiur01}, a
+%   monograph/whole book in a series (see 2a in spec. document)
+%   \cite{Harel79}, a divisible-book such as an anthology or compilation
+%   \cite{Editor00} followed by the same example, however we only output
+%   the series if the volume number is given \cite{Editor00a} (so
+%   Editor00a's series should NOT be present since it has no vol. no.),
+%   a chapter in a divisible book \cite{Spector90}, a chapter in a
+%   divisible book in a series \cite{Douglass98}, a multi-volume work as
+%   book \cite{Knuth97}, a couple of articles in a proceedings (of a
+%   conference, symposium, workshop for example) (paginated proceedings
+%   article) \cite{Andler79, Hagerup1993}, a proceedings article with
+%   all possible elements \cite{Smith10}, an example of an enumerated
+%   proceedings article \cite{VanGundy07}, an informally published work
+%   \cite{Harel78}, a couple of preprints \cite{Bornmann2019,
+%     AnzarootPBM14}, a doctoral dissertation \cite{Clarkson85}, a
+%   master's thesis: \cite{anisi03}, an online document / world wide web
+%   resource \cite{Thornburg01, Ablamowicz07, Poker06}, a video game
+%   (Case 1) \cite{Obama08} and (Case 2) \cite{Novak03} and \cite{Lee05}
+%   and (Case 3) a patent \cite{JoeScientist001}, work accepted for
+%   publication \cite{rous08}, 'YYYYb'-test for prolific author
+%   \cite{SaeediMEJ10} and \cite{SaeediJETC10}. Other cites might
+%   contain 'duplicate' DOI and URLs (some SIAM articles)
+%   \cite{Kirschmer:2010:AEI:1958016.1958018}. Boris / Barbara Beeton:
+%   multi-volume works as books \cite{MR781536} and \cite{MR781537}. A
+%   couple of citations with DOIs:
+%   \cite{2004:ITE:1009386.1010128,Kirschmer:2010:AEI:1958016.1958018}. Online
+%   citations: \cite{TUGInstmem, Thornburg01, CTANacmart}. Artifacts:
+%   \cite{R} and \cite{UMassCitations}.
+
+% \section{Acknowledgments}
+
+% Identification of funding sources and other support, and thanks to
+% individuals and groups that assisted in the research and the
+% preparation of the work should be included in an acknowledgment
+% section, which is placed just before the reference section in your
+% document.
+
+% This section has a special environment:
+% \begin{verbatim}
+%   \begin{acks}
+%   ...
+%   \end{acks}
+% \end{verbatim}
+% so that the information contained therein can be more easily collected
+% during the article metadata extraction phase, and to ensure
+% consistency in the spelling of the section heading.
+
+% Authors should not prepare this section as a numbered or unnumbered {\verb|\section|}; please use the ``{\verb|acks|}'' environment.
+
+% \section{Appendices}
+
+% If your work needs an appendix, add it before the
+% ``\verb|\end{document}|'' command at the conclusion of your source
+% document.
+
+% Start the appendix with the ``\verb|appendix|'' command:
+% \begin{verbatim}
+%   \appendix
+% \end{verbatim}
+% and note that in the appendix, sections are lettered, not
+% numbered. This document has two appendices, demonstrating the section
+% and subsection identification method.
+
+% \section{Multi-language papers}
+
+% Papers may be written in languages other than English or include
+% titles, subtitles, keywords and abstracts in different languages (as a
+% rule, a paper in a language other than English should include an
+% English title and an English abstract).  Use \verb|language=...| for
+% every language used in the paper.  The last language indicated is the
+% main language of the paper.  For example, a French paper with
+% additional titles and abstracts in English and German may start with
+% the following command
+% \begin{verbatim}
+% \documentclass[sigconf, language=english, language=german,
+%                language=french]{acmart}
+% \end{verbatim}
+
+% The title, subtitle, keywords and abstract will be typeset in the main
+% language of the paper.  The commands \verb|\translatedXXX|, \verb|XXX|
+% begin title, subtitle and keywords, can be used to set these elements
+% in the other languages.  The environment \verb|translatedabstract| is
+% used to set the translation of the abstract.  These commands and
+% environment have a mandatory first argument: the language of the
+% second argument.  See \verb|sample-sigconf-i13n.tex| file for examples
+% of their usage.
+
+% \section{SIGCHI Extended Abstracts}
+
+% The ``\verb|sigchi-a|'' template style (available only in \LaTeX\ and
+% not in Word) produces a landscape-orientation formatted article, with
+% a wide left margin. Three environments are available for use with the
+% ``\verb|sigchi-a|'' template style, and produce formatted output in
+% the margin:
+% \begin{itemize}
+% \item {\verb|sidebar|}:  Place formatted text in the margin.
+% \item {\verb|marginfigure|}: Place a figure in the margin.
+% \item {\verb|margintable|}: Place a table in the margin.
+% \end{itemize}
+
+% %%
+% %% The acknowledgments section is defined using the "acks" environment
+% %% (and NOT an unnumbered section). This ensures the proper
+% %% identification of the section in the article metadata, and the
+% %% consistent spelling of the heading.
+% \begin{acks}
+% To Robert, for the bagels and explaining CMYK and color spaces.
+% \end{acks}
+
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{cites}
+% \printbibliography[category=cited]% default title for `article` class: "References"
+% \printbibliography[title={Further Reading},notcategory=cited]
+
+% \bibliographystyle{ACM-Reference-Format}
+% \bibliography{sample-base}
+
+% %%
+% %% If your work has an appendix, this is the place to put it.
+% \appendix
+
+% \section{Research Methods}
+
+% \subsection{Part One}
+
+% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+% malesuada, quam in pulvinar varius, metus nunc fermentum urna, id
+% sollicitudin purus odio sit amet enim. Aliquam ullamcorper eu ipsum
+% vel mollis. Curabitur quis dictum nisl. Phasellus vel semper risus, et
+% lacinia dolor. Integer ultricies commodo sem nec semper.
+
+% \subsection{Part Two}
+
+% Etiam commodo feugiat nisl pulvinar pellentesque. Etiam auctor sodales
+% ligula, non varius nibh pulvinar semper. Suspendisse nec lectus non
+% ipsum convallis congue hendrerit vitae sapien. Donec at laoreet
+% eros. Vivamus non purus placerat, scelerisque diam eu, cursus
+% ante. Etiam aliquam tortor auctor efficitur mattis.
+
+% \section{Online Resources}
+
+% Nam id fermentum dui. Suspendisse sagittis tortor a nulla mollis, in
+% pulvinar ex pretium. Sed interdum orci quis metus euismod, et sagittis
+% enim maximus. Vestibulum gravida massa ut felis suscipit
+% congue. Quisque mattis elit a risus ultrices commodo venenatis eget
+% dui. Etiam sagittis eleifend elementum.
+
+% Nam interdum magna at lectus dignissim, ac dignissim lorem
+% rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
+% massa et mattis lacinia.
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigplan.tex'.
